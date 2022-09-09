@@ -119,6 +119,7 @@
 
             h1 {
                 color: $--red;
+                font-weight: bold;
             }
         }
 
