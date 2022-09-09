@@ -1,7 +1,7 @@
 <template>
 
-  <main class="container-fluid overflow-hidden">
-    <h2 class="py-5">
+  <main class="container-fluid overflow-hidden p-4">
+    <h2 class="pb-5">
         <span v-if="getQuery === ''">
             Popolari su Boolflix:
         </span>
@@ -83,9 +83,8 @@
             &:hover {
             transform: scale(1.2);
             z-index: 1;
+            }
         }
-
-    }
     }
 
 </style>
