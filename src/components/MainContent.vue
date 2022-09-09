@@ -12,10 +12,10 @@
     <div class="my_grid">
         <div class="card" v-for="movie in getMovies" :key="movie.id">
             <p>
-                {{ movie.title }} <br>
-                {{ movie.original_title }} <br>
-                {{ movie.original_language }} <br>
-                {{ movie.vote_average }}
+                <strong>Titolo: </strong>{{ movie.title }} <br><br>
+                <strong>Titolo originale: </strong>{{ movie.original_title }} <br><br>
+                <strong>Lingua originale: </strong>{{ movie.original_language }} <br><br>
+                <strong>Valutazione: </strong>{{ movie.vote_average }}
             </p>
         </div>
     </div>
@@ -45,6 +45,7 @@
     .my_grid {
         display: grid;
         grid-template-columns: repeat(6,1fr);
+        gap: 1rem;
 
         .card {
             color: #000;
