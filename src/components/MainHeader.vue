@@ -2,7 +2,7 @@
   
   <header class="d-flex justify-content-between p-3">
 
-    <div class="logo">
+    <div class="logo" @click="query='', fetchMovies(), fetchTv()">
         <h1 class="text-uppercase">
             boolflix
         </h1>
@@ -12,8 +12,8 @@
         <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-white glass" @click="searching = true" />
     </div>
     <div v-else class="searching">
-        <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-white glass" @click="fetchMovies" />
-        <input type="text" placeholder="Cerca per titolo..." v-model="query" @keyup.enter="fetchMovies">
+        <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-white glass" @click="fetchMovies(),fetchTv()" />
+        <input type="text" placeholder="Cerca per titolo..." v-model="query" @keyup.enter="fetchMovies(), fetchTv()">
         <div class="layover" @click="searching = false"></div>
     </div>
 
@@ -101,6 +101,8 @@
 
     header {
         .logo {
+            cursor: pointer;
+            
             h1 {
                 color: $--red;
             }
