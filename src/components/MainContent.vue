@@ -17,7 +17,9 @@
         </h3>
         <div class="my_grid">
             <div class="my_card" v-for="movie in getMovies" :key="movie.id">
-                <img :src="getImg(movie)" alt="">
+                <div v-if="getImg(movie)">
+                    <img :src="getImg(movie)" alt="">
+                </div>
                 <p>
                     <strong>Titolo: </strong>{{ movie.title }} <br><br>
                     <strong>Titolo originale: </strong>{{ movie.original_title }} <br><br>
@@ -48,7 +50,9 @@
         </h3>
         <div class="my_grid">
             <div class="my_card" v-for="tv in getTv" :key="tv.id">
-                <img :src="getImgTv(tv)" alt="">
+                <div v-if="getImgTv(tv)">
+                    <img :src="getImgTv(tv)" alt="">
+                </div>
                 <p>
                     <strong>Titolo: </strong>{{ tv.name }} <br><br>
                     <strong>Titolo originale: </strong>{{ tv.original_name }} <br><br>
@@ -111,9 +115,11 @@
                 return src;
             },
             getImg(movie) {
+                if(movie.backdrop_path === null) return false
                 return `https://image.tmdb.org/t/p/w300${movie.backdrop_path}`
             },
             getImgTv(tv) {
+                if(tv.backdrop_path === null) return false
                 return `https://image.tmdb.org/t/p/w300${tv.backdrop_path}`
             },
             getVote(vote){
