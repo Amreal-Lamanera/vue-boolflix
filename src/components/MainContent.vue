@@ -1,6 +1,6 @@
 <template>
 
-  <main class="container-fluid">
+  <main class="container-fluid overflow-hidden">
     <h2 class="py-5">
         <span v-if="getQuery === ''">
             Popolari su Boolflix:
