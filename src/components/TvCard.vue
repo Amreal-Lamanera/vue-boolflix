@@ -1,24 +1,24 @@
 <template>
     <div class="my_card">
-        <div v-if="getImgTv(tv)">
-            <img :src="getImgTv(tv)" alt="">
+        <div v-if="getImgTv(tv)" class="position-relative">
+            <img :src="getImgTv(tv)" alt="" class="poster">
+            <div class="layover">
+                <strong>Titolo: </strong>{{ tv.name }}
+                <strong>Titolo originale: </strong>{{ tv.original_name }}
+                <strong>Lingua originale: </strong>
+    
+                <img :src="getSrc(tv.original_language)" alt="" v-if="getSrc(tv.original_language)">
+    
+                <span v-else>
+                    {{tv.original_language}}
+                </span>
+                <div>
+                    <strong>Valutazione: </strong>
+                    <font-awesome-icon class="star" icon="fa-solid fa-star" v-for="n,i in getVote(tv.vote_average)" :key="5+i" />
+                    <font-awesome-icon class="star" icon="fa-regular fa-star" v-for="n,i in (5 - getVote(tv.vote_average))" :key="10-i" />
+                </div>
+            </div>
         </div>
-        <p>
-            <strong>Titolo: </strong>{{ tv.name }} <br><br>
-            <strong>Titolo originale: </strong>{{ tv.original_name }} <br><br>
-            <strong>Lingua originale: </strong>
-
-            <img :src="getSrc(tv.original_language)" alt="" v-if="getSrc(tv.original_language)">
-
-            <span v-else>
-                {{tv.original_language}}
-            </span>
-
-            <br><br>
-            <strong>Valutazione: </strong>
-            <font-awesome-icon class="star" icon="fa-solid fa-star" v-for="n,i in getVote(tv.vote_average)" :key="5+i" />
-            <font-awesome-icon class="star" icon="fa-regular fa-star" v-for="n,i in (5 - getVote(tv.vote_average))" :key="10-i" />
-        </p>
     </div>
   </template>
   
@@ -70,7 +70,7 @@
   </script>
   
   <style scoped lang="scss">
-  
 
+    @import '../style/card-style.scss'
   
   </style>

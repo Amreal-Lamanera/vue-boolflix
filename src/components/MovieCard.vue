@@ -1,27 +1,25 @@
 <template>
     <div class="my_card">
-                <div v-if="getImg(movie)">
-                    <img :src="getImg(movie)" alt="">
+                <div v-if="getImg(movie)" class="position-relative">
+                    <img :src="getImg(movie)" alt="" class="poster">
+                    <div class="layover">
+                        <strong>Titolo: </strong>{{ movie.title }}
+                        <strong>Titolo originale: </strong>{{ movie.original_title }}
+                        <strong>Lingua originale: </strong>
+        
+                        <img :src="getSrc(movie.original_language)" alt="" v-if="getSrc(movie.original_language)">
+        
+                        <span v-else>
+                            {{movie.original_language}}
+                        </span>
+                        
+                        <div>
+                            <strong>Valutazione: </strong>
+                            <font-awesome-icon class="star" icon="fa-solid fa-star" v-for="n,i in getVote(movie.vote_average)" :key="i" />
+                            <font-awesome-icon class="star" icon="fa-regular fa-star" v-for="n,i in (5 - getVote(movie.vote_average))" :key="5-i" />
+                        </div>
+                    </div>
                 </div>
-                <p>
-                    <strong>Titolo: </strong>{{ movie.title }} <br><br>
-                    <strong>Titolo originale: </strong>{{ movie.original_title }} <br><br>
-                    <strong>Lingua originale: </strong>
-                    <!-- {{movie.original_language}} -->
-    
-                    <!-- <img id="currentPhoto" :src="`https://flagcdn.com/16x12/${movie.original_language}.png`" onerror='this.style.display = "none"; flag = false'> -->
-    
-                    <img :src="getSrc(movie.original_language)" alt="" v-if="getSrc(movie.original_language)">
-    
-                    <span v-else>
-                        {{movie.original_language}}
-                    </span>
-    
-                    <br><br>
-                    <strong>Valutazione: </strong>
-                    <font-awesome-icon class="star" icon="fa-solid fa-star" v-for="n,i in getVote(movie.vote_average)" :key="i" />
-                    <font-awesome-icon class="star" icon="fa-regular fa-star" v-for="n,i in (5 - getVote(movie.vote_average))" :key="5-i" />
-                </p>
     </div>
   </template>
   
@@ -73,6 +71,6 @@
   
   <style scoped lang="scss">
   
-
+    @import '../style/card-style.scss';
   
   </style>

@@ -76,14 +76,6 @@
         display: grid;
         grid-template-columns: repeat(4,1fr);
         gap: 1rem;
-
-        .my_card {
-            text-align: center;
-
-            .star {
-                color: gold;
-            }
-        }
     }
 
 </style>
