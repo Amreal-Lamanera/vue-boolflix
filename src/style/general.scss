@@ -1,0 +1,13 @@
+@import './variables.scss';
+
+* {
+    font-family: "Open Sans", sans-serif;
+}
+
+#app {
+    background-color: $--dark;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: #FFF;
+}
