@@ -14,7 +14,18 @@
             <p>
                 <strong>Titolo: </strong>{{ movie.title }} <br><br>
                 <strong>Titolo originale: </strong>{{ movie.original_title }} <br><br>
-                <strong>Lingua originale: </strong>{{ movie.original_language }} <br><br>
+                <strong>Lingua originale: </strong>
+                <!-- {{movie.original_language}} -->
+
+                <!-- <img id="currentPhoto" :src="`https://flagcdn.com/16x12/${movie.original_language}.png`" onerror='this.style.display = "none"; flag = false'> -->
+
+                <img :src="getSrc(movie.original_language)" alt="" v-if="getSrc(movie.original_language)">
+
+                <span v-else>
+                    {{movie.original_language}}
+                </span>
+
+                <br><br>
                 <strong>Valutazione: </strong>{{ movie.vote_average }}
             </p>
         </div>
@@ -28,6 +39,39 @@
     import state from '../store';
 
     export default {
+        data() {
+            return {
+            }
+        },
+        methods: {
+            getSrc(lang) {
+                let src = 'https://flagcdn.com/16x12/'
+                switch (lang) {
+                    case 'it':
+                        src += 'it'
+                        break;
+                    case 'es':
+                        src += 'es'
+                        break;
+                    case 'en':
+                        src += 'gb-eng'
+                        break;
+                    case 'ko':
+                        src += 'kr'
+                        break;
+                    case 'ja':
+                        src += 'jp'
+                        break;
+                    case 'te':
+                        src += 'in'
+                        break;
+                    default:
+                        return false;
+                }
+                src += '.png';
+                return src;
+            },
+        },
         computed: {
             getMovies() {
                 return state.movies;
