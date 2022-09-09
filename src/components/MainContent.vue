@@ -16,7 +16,8 @@
             Film
         </h3>
         <div class="my_grid">
-            <div class="card" v-for="movie in getMovies" :key="movie.id">
+            <div class="my_card" v-for="movie in getMovies" :key="movie.id">
+                <img :src="getImg(movie)" alt="">
                 <p>
                     <strong>Titolo: </strong>{{ movie.title }} <br><br>
                     <strong>Titolo originale: </strong>{{ movie.original_title }} <br><br>
@@ -44,7 +45,8 @@
             Serie
         </h3>
         <div class="my_grid">
-            <div class="card" v-for="tv in getTv" :key="tv.id">
+            <div class="my_card" v-for="tv in getTv" :key="tv.id">
+                <img :src="getImgTv(tv)" alt="">
                 <p>
                     <strong>Titolo: </strong>{{ tv.name }} <br><br>
                     <strong>Titolo originale: </strong>{{ tv.original_name }} <br><br>
@@ -104,6 +106,12 @@
                 src += '.png';
                 return src;
             },
+            getImg(movie) {
+                return `https://image.tmdb.org/t/p/w300${movie.backdrop_path}`
+            },
+            getImgTv(tv) {
+                return `https://image.tmdb.org/t/p/w300${tv.backdrop_path}`
+            }
         },
         computed: {
             getMovies() {
@@ -114,7 +122,7 @@
             },
             getTv() {
                 return state.tv;
-            },
+            }
         }
     }
 
@@ -128,11 +136,11 @@
 
     .my_grid {
         display: grid;
-        grid-template-columns: repeat(6,1fr);
+        grid-template-columns: repeat(4,1fr);
         gap: 1rem;
 
-        .card {
-            color: #000;
+        .my_card {
+            text-align: center;
         }
     }
 
