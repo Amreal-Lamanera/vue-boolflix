@@ -9,12 +9,19 @@
     </div>
 
     <div v-if="!searching">
-        <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-white glass" @click="searching = true" />
+
+        <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-white glass" @click="clickHandler()" />
+
     </div>
+
     <div v-else class="searching">
+
         <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-white glass" @click="fetchMovies(),fetchTv()" />
-        <input type="text" placeholder="Cerca per titolo..." v-model="query" @keyup.enter="fetchMovies(), fetchTv()">
+
+        <input type="text" placeholder="Cerca per titolo..." v-model="query" @keyup.enter="fetchMovies(), fetchTv()" ref="searchBar" >
+
         <div class="layover" @click="searching = false"></div>
+
     </div>
 
   </header>
@@ -86,6 +93,13 @@
                     state.tv = res.data.results;
                 })
             },
+            async clickHandler() {
+                this.searching = true;
+                setTimeout(() => {
+                    this.$refs.searchBar.focus()
+                },200)
+            },
+
         },
         beforeMount() {
             this.fetchMovies();
@@ -102,7 +116,7 @@
     header {
         .logo {
             cursor: pointer;
-            
+
             h1 {
                 color: $--red;
             }

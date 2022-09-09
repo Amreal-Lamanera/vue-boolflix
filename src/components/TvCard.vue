@@ -1,28 +1,11 @@
 <template>
     <div class="my_card position-relative">
+
         <div v-if="getImgTv(tv)">
             <img :src="getImgTv(tv)" alt="" class="poster">
         </div>
-        <div v-else class="default_img p-4">
-            <strong>Titolo: </strong>{{ tv.name }} <br>
-            <strong>Titolo originale: </strong>{{ tv.original_name }} <br>
-            <strong>Lingua originale: </strong>
 
-            <img :src="getSrc(tv.original_language)" alt="" v-if="getSrc(tv.original_language)">
-
-            <span v-else>
-                {{tv.original_language}}
-            </span>
-
-            <br>
-
-            <div>
-                <strong>Valutazione: </strong>
-                <font-awesome-icon class="star" icon="fa-solid fa-star" v-for="n,i in getVote(tv.vote_average)" :key="5+i" />
-                <font-awesome-icon class="star" icon="fa-regular fa-star" v-for="n,i in (5 - getVote(tv.vote_average))" :key="10-i" />
-            </div>
-        </div>
-        <div v-if="getImgTv(tv)" class="layover">
+        <div :class="getImgTv(tv) ? 'layover' : 'default_img p-4'">
             <strong>Titolo: </strong>{{ tv.name }}
             <strong>Titolo originale: </strong>{{ tv.original_name }}
 
