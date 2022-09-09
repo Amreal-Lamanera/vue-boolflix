@@ -34,8 +34,8 @@
     
                     <br><br>
                     <strong>Valutazione: </strong>
-                    <font-awesome-icon icon="fa-solid fa-star" v-for="n,i in getVote(movie.vote_average)" :key="i" />
-                    <font-awesome-icon icon="fa-regular fa-star" v-for="n,i in (5 - getVote(movie.vote_average))" :key="i" />
+                    <font-awesome-icon class="star" icon="fa-solid fa-star" v-for="n,i in getVote(movie.vote_average)" :key="i" />
+                    <font-awesome-icon class="star" icon="fa-regular fa-star" v-for="n,i in (5 - getVote(movie.vote_average))" :key="5-i" />
                 </p>
             </div>
         </div>
@@ -63,8 +63,8 @@
     
                     <br><br>
                     <strong>Valutazione: </strong>
-                    <font-awesome-icon icon="fa-solid fa-star" v-for="n,i in getVote(tv.vote_average)" :key="i" />
-                    <font-awesome-icon icon="fa-regular fa-star" v-for="n,i in (5 - getVote(tv.vote_average))" :key="i" />
+                    <font-awesome-icon class="star" icon="fa-solid fa-star" v-for="n,i in getVote(tv.vote_average)" :key="5+i" />
+                    <font-awesome-icon class="star" icon="fa-regular fa-star" v-for="n,i in (5 - getVote(tv.vote_average))" :key="10-i" />
                 </p>
             </div>
         </div>
@@ -149,6 +149,10 @@
 
         .my_card {
             text-align: center;
+
+            .star {
+                color: gold;
+            }
         }
     }
 
