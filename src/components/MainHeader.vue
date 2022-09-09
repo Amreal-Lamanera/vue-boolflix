@@ -31,16 +31,17 @@
             return {
                 query: '',
                 searching: false,
-                queryType: ''
+                queryTypeMovie: '',
+                queryTypeTv: ''
             }
         },
         methods: {
             fetchMovies() {
-                this.queryType = this.query === '' ?
+                this.queryTypeMovie = this.query === '' ?
                     '/movie/popular' :
                     '/search/movie';
 
-                const parameters = this.queryType === '/movie/popular' ?
+                const parameters = this.queryTypeMovie === '/movie/popular' ?
                     { api_key: state.apiKey } :
                     {
                         api_key: state.apiKey,
@@ -50,7 +51,7 @@
 
                 axios
 
-                .get(`${state.baseUri}${this.queryType}`,{
+                .get(`${state.baseUri}${this.queryTypeMovie}`,{
                     params: parameters
                 })
 
@@ -60,9 +61,35 @@
                     state.movies = res.data.results;
                 })
             },
+            fetchTv() {
+                this.queryTypeTv = this.query === '' ?
+                    '/tv/popular' :
+                    '/search/tv';
+
+                const parameters = this.queryTypeTv === '/tv/popular' ?
+                    { api_key: state.apiKey } :
+                    {
+                        api_key: state.apiKey,
+                        query: this.query,
+                        language: 'it-IT',
+                    };
+
+                axios
+
+                .get(`${state.baseUri}${this.queryTypeTv}`,{
+                    params: parameters
+                })
+
+                .then((res) => {
+                    console.log(res.data);
+                    state.query = this.query;
+                    state.tv = res.data.results;
+                })
+            },
         },
         beforeMount() {
             this.fetchMovies();
+            this.fetchTv();
         },
     }
 

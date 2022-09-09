@@ -1,6 +1,6 @@
 <template>
 
-  <main class="container-xl">
+  <main class="container-fluid">
     <h2 class="py-5">
         <span v-if="getQuery === ''">
             Popolari su Boolflix:
@@ -9,25 +9,58 @@
             Risultato ricerca:
         </span>
     </h2>
-    <div class="my_grid">
-        <div class="card" v-for="movie in getMovies" :key="movie.id">
-            <p>
-                <strong>Titolo: </strong>{{ movie.title }} <br><br>
-                <strong>Titolo originale: </strong>{{ movie.original_title }} <br><br>
-                <strong>Lingua originale: </strong>
-                <!-- {{movie.original_language}} -->
 
-                <!-- <img id="currentPhoto" :src="`https://flagcdn.com/16x12/${movie.original_language}.png`" onerror='this.style.display = "none"; flag = false'> -->
+    <div class="films mb-5">
 
-                <img :src="getSrc(movie.original_language)" alt="" v-if="getSrc(movie.original_language)">
+        <h3>
+            Film
+        </h3>
+        <div class="my_grid">
+            <div class="card" v-for="movie in getMovies" :key="movie.id">
+                <p>
+                    <strong>Titolo: </strong>{{ movie.title }} <br><br>
+                    <strong>Titolo originale: </strong>{{ movie.original_title }} <br><br>
+                    <strong>Lingua originale: </strong>
+                    <!-- {{movie.original_language}} -->
+    
+                    <!-- <img id="currentPhoto" :src="`https://flagcdn.com/16x12/${movie.original_language}.png`" onerror='this.style.display = "none"; flag = false'> -->
+    
+                    <img :src="getSrc(movie.original_language)" alt="" v-if="getSrc(movie.original_language)">
+    
+                    <span v-else>
+                        {{movie.original_language}}
+                    </span>
+    
+                    <br><br>
+                    <strong>Valutazione: </strong>{{ movie.vote_average }}
+                </p>
+            </div>
+        </div>
 
-                <span v-else>
-                    {{movie.original_language}}
-                </span>
+    </div>
 
-                <br><br>
-                <strong>Valutazione: </strong>{{ movie.vote_average }}
-            </p>
+    <div class="series">
+        <h3>
+            Serie
+        </h3>
+        <div class="my_grid">
+            <div class="card" v-for="tv in getTv" :key="tv.id">
+                <p>
+                    <strong>Titolo: </strong>{{ tv.name }} <br><br>
+                    <strong>Titolo originale: </strong>{{ tv.original_name }} <br><br>
+                    <strong>Lingua originale: </strong>
+                    <!-- {{tv.original_language}} -->
+    
+                    <img :src="getSrc(tv.original_language)" alt="" v-if="getSrc(tv.original_language)">
+    
+                    <span v-else>
+                        {{tv.original_language}}
+                    </span>
+    
+                    <br><br>
+                    <strong>Valutazione: </strong>{{ tv.vote_average }}
+                </p>
+            </div>
         </div>
     </div>
 </main>
@@ -78,13 +111,20 @@
             },
             getQuery(){
                 return state.query;
-            }
+            },
+            getTv() {
+                return state.tv;
+            },
         }
     }
 
 </script>
 
 <style lang="scss" scoped>
+
+    h3 {
+        padding-bottom: 1rem;
+    }
 
     .my_grid {
         display: grid;
