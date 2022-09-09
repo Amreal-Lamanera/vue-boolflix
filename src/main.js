@@ -32,9 +32,13 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faStar as faStarSol } from '@fortawesome/free-solid-svg-icons'
+import { faStar as faStarReg } from '@fortawesome/free-regular-svg-icons'
 
 /* add icons to the library */
 library.add(faMagnifyingGlass)
+library.add(faStarSol)
+library.add(faStarReg)
 
 /* add font awesome icon component */
 Vue.component('font-awesome-icon', FontAwesomeIcon)

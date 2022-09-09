@@ -33,7 +33,9 @@
                     </span>
     
                     <br><br>
-                    <strong>Valutazione: </strong>{{ movie.vote_average }}
+                    <strong>Valutazione: </strong>
+                    <font-awesome-icon icon="fa-solid fa-star" v-for="n,i in getVote(movie.vote_average)" :key="i" />
+                    <font-awesome-icon icon="fa-regular fa-star" v-for="n,i in (5 - getVote(movie.vote_average))" :key="i" />
                 </p>
             </div>
         </div>
@@ -60,7 +62,9 @@
                     </span>
     
                     <br><br>
-                    <strong>Valutazione: </strong>{{ tv.vote_average }}
+                    <strong>Valutazione: </strong>
+                    <font-awesome-icon icon="fa-solid fa-star" v-for="n,i in getVote(tv.vote_average)" :key="i" />
+                    <font-awesome-icon icon="fa-regular fa-star" v-for="n,i in (5 - getVote(tv.vote_average))" :key="i" />
                 </p>
             </div>
         </div>
@@ -111,6 +115,10 @@
             },
             getImgTv(tv) {
                 return `https://image.tmdb.org/t/p/w300${tv.backdrop_path}`
+            },
+            getVote(vote){
+                return Math.floor(vote/2)
+                // return vote
             }
         },
         computed: {
