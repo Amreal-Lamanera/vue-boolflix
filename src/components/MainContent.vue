@@ -16,7 +16,7 @@
             Film
         </h3>
         <div class="my_grid">
-             <div v-for="movie in getMovies" :key="movie.id">
+             <div v-for="movie in getMovies" :key="movie.id" class="card-wrapper">
                 <MovieCard :movie="movie" />
             </div> 
         </div>
@@ -28,7 +28,7 @@
             Serie
         </h3>
         <div class="my_grid">
-            <div v-for="tv in getTv" :key="tv.id">
+            <div v-for="tv in getTv" :key="tv.id" class="card-wrapper">
                 <TvCard :tv="tv" />
             </div>
         </div>
@@ -76,6 +76,16 @@
         display: grid;
         grid-template-columns: repeat(4,1fr);
         gap: 1rem;
+
+        .card-wrapper {
+            transition: all 500ms ease-in-out;
+            
+            &:hover {
+            transform: scale(1.2);
+            z-index: 1;
+        }
+
+    }
     }
 
 </style>
