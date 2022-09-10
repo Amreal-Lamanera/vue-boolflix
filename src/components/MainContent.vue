@@ -86,7 +86,7 @@
     methods: {
         moveNextMovie() {
             console.log('OK2');
-            if(++this.movieMoveCount === this.getMoviesLen-5) {
+            if(++this.movieMoveCount === this.getMoviesLen-5 || this.getMoviesLen <= 5) {
                 this.movieMoveCount = 0;
             }
             // console.log(this.$refs.filmContainer.style)
@@ -115,7 +115,7 @@
         },
         moveNextTv() {
             console.log('OK2');
-            if(++this.tvMoveCount === this.getTvLen-5) {
+            if(++this.tvMoveCount === this.getTvLen-5 || this.getTvLen <= 5) {
                 this.tvMoveCount = 0;
             }
             this.$refs.tvContainer.style.transform = `translateX(${-300 * this.tvMoveCount}px)`;
