@@ -5,9 +5,15 @@
             <img :src="getImg(movie)" alt="" class="poster">
         </div>
 
-        <div :class="getImg(movie)? 'layover' : 'default_img p-4'">
-            <strong>Titolo: </strong>{{ movie.title }}
-            <strong>Titolo originale: </strong>{{ movie.original_title }}
+        <div :class="getImg(movie)? 'layover' : 'default_img'">
+            <div>
+                <strong>Titolo: </strong>{{ movie.title }}
+            </div>
+
+            <div>
+                <strong>Titolo originale: </strong>{{ movie.original_title }}
+            </div>
+
             <div>
 
                 <strong>Lingua originale: </strong>

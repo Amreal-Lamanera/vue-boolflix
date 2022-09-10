@@ -5,9 +5,14 @@
             <img :src="getImgTv(tv)" alt="" class="poster">
         </div>
 
-        <div :class="getImgTv(tv) ? 'layover' : 'default_img p-4'">
-            <strong>Titolo: </strong>{{ tv.name }}
-            <strong>Titolo originale: </strong>{{ tv.original_name }}
+        <div :class="getImgTv(tv) ? 'layover' : 'default_img'">
+            <div>
+                <strong>Titolo: </strong>{{ tv.name }}
+            </div>
+
+            <div>
+                <strong>Titolo originale: </strong>{{ tv.original_name }}
+            </div>
 
             <div>
                 <strong>Lingua originale: </strong>
