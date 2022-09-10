@@ -178,7 +178,6 @@
             else if(this.windowWidth < 1200) this.dim = 4;
             else this.dim = 5;
             this.movieMoveCount -= 1;
-            console.log(this.movieMoveCount);
             this.moveNextMovie();
             this.tvMoveCount -= 1;
             this.moveNextTv();
