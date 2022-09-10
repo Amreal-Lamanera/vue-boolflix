@@ -55,6 +55,6 @@
   
   <style scoped lang="scss">
 
-    @import '../style/card-style.scss'
+    @import '../style/card-style.scss';
   
   </style>

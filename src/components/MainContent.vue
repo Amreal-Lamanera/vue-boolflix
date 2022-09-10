@@ -64,7 +64,7 @@
         return {
             movieMoveCount: 0,
             tvMoveCount: 0,
-            cardDim: 0
+            dim: null,
         };
     },
     computed: {
@@ -87,11 +87,20 @@
     methods: {
         moveNextMovie() {
             const windowWidth = window.innerWidth;
-            const cardDim = (windowWidth-48)/5;
-            
-            if(this.getMoviesLen <= 5) return;
+            const padding = 48;
+            let dim;
+            if(windowWidth < 576)   dim = 1;
+            else if(windowWidth < 768)  dim = 2;
+            else if(windowWidth < 992)  dim = 3;
+            else if(windowWidth < 1200) dim = 4;
+            else dim = 5;
+            this.dim = dim;
 
-            if(++this.movieMoveCount === this.getMoviesLen-4) {
+            const cardDim = (windowWidth-padding)/dim;
+            
+            if(this.getMoviesLen <= dim) return;
+
+            if(++this.movieMoveCount === this.getMoviesLen-dim+1) {
                 this.movieMoveCount = 0;
             }
 
@@ -100,8 +109,17 @@
             this.$refs.movie_arrow_prev.style.transform = `translateX(${cardDim * this.movieMoveCount}px)`;
         },
         movePrevMovie() {
+            const windowWidth = window.innerWidth;
+            let dim;
+            if(windowWidth < 576)   dim = 1;
+            else if(windowWidth < 768)  dim = 2;
+            else if(windowWidth < 992)  dim = 3;
+            else if(windowWidth < 1200) dim = 4;
+            else dim = 5;
+            this.dim = dim;
+
             if(this.movieMoveCount === 0) {
-                this.movieMoveCount = this.getMoviesLen-6;
+                this.movieMoveCount = this.getMoviesLen-dim-1;
                 this.moveNextMovie();
                 return;
             }
@@ -116,11 +134,19 @@
         },
         moveNextTv() {
             const windowWidth = window.innerWidth;
-            const cardDim = (windowWidth-48)/5;
+            const padding = 48;
+            let dim;
+            if(windowWidth < 576)   dim = 1;
+            else if(windowWidth < 768)  dim = 2;
+            else if(windowWidth < 992)  dim = 3;
+            else if(windowWidth < 1200) dim = 4;
+            else dim = 5;
+            this.dim = dim;
+            const cardDim = (windowWidth-padding)/dim;
             
-            if(this.getTvLen <= 5) return;
+            if(this.getTvLen <= dim) return;
 
-            if(++this.tvMoveCount === this.getTvLen-4) {
+            if(++this.tvMoveCount === this.getTvLen-dim+1) {
                 this.tvMoveCount = 0;
             }
 
@@ -129,8 +155,16 @@
             this.$refs.tv_arrow_prev.style.transform = `translateX(${cardDim * this.tvMoveCount}px)`;
         },
         movePrevTv() {
+            const windowWidth = window.innerWidth;
+            let dim;
+            if(windowWidth < 576)   dim = 1;
+            else if(windowWidth < 768)  dim = 2;
+            else if(windowWidth < 992)  dim = 3;
+            else if(windowWidth < 1200) dim = 4;
+            else dim = 5;
+            this.dim = dim;
             if(this.tvMoveCount === 0) {
-                this.tvMoveCount = this.getTvLen-6;
+                this.tvMoveCount = this.getTvLen-dim-1;
                 this.moveNextTv();
                 return;
             }
@@ -151,6 +185,12 @@
         getTv: function() {
             this.resetMoveTv();
         },
+        dim: function() {
+            this.movieMoveCount -= 1;
+            this.moveNextMovie();
+            this.tvMoveCount -= 1;
+            this.moveNextTv();
+        }
     },
     components: {
         MovieCard,
@@ -198,7 +238,7 @@
             }
 
             &>* {
-                flex-basis: calc(100% / 5);
+                flex-basis: 100%;
                 flex-shrink: 0;
             }
         }
@@ -216,6 +256,30 @@
             z-index: 1;
             transition-delay: 500ms;
             }
+        }
+    }
+
+    @media (min-width: 576px) {
+        .card-container .my-cards > * {
+            flex-basis: calc(100% / 2);
+        }
+    }
+
+    @media (min-width: 768px) {
+        .card-container .my-cards > * {
+            flex-basis: calc(100% / 3);
+        }
+    }
+
+    @media (min-width: 992px) {
+        .card-container .my-cards > * {
+            flex-basis: calc(100% / 4);
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .card-container .my-cards > * {
+            flex-basis: calc(100% / 5);
         }
     }
 
