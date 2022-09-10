@@ -83,11 +83,6 @@
         getTvLen() {
             return state.tv.length;
         },
-        // getCardDim(){
-        //     const windowWidth = window.innerWidth;
-        //     const cardDim = windowWidth/5 -48
-        //     return windowWidth;
-        // }
     },
     methods: {
         moveNextMovie() {
@@ -100,7 +95,6 @@
                 this.movieMoveCount = 0;
             }
 
-            console.log(this.movieMoveCount, this.getMoviesLen);
             this.$refs.filmContainer.style.transform = `translateX(${-cardDim * this.movieMoveCount}px)`;
             this.$refs.movie_arrow_next.style.transform = `translateX(${cardDim * this.movieMoveCount}px)`;
             this.$refs.movie_arrow_prev.style.transform = `translateX(${cardDim * this.movieMoveCount}px)`;
@@ -112,11 +106,9 @@
                 return;
             }
             this.movieMoveCount -= 2;
-            console.log(this.movieMoveCount);
             this.moveNextMovie();
         },
         resetMoveMovie(){
-            console.log('RESET');
             this.movieMoveCount = 0;
             this.$refs.filmContainer.style.transform = `translateX(0)`;
             this.$refs.movie_arrow_next.style.transform = `translateX(0)`;
@@ -132,7 +124,6 @@
                 this.tvMoveCount = 0;
             }
 
-            console.log(this.tvMoveCount, this.getTvLen);
             this.$refs.tvContainer.style.transform = `translateX(${-cardDim * this.tvMoveCount}px)`;
             this.$refs.tv_arrow_next.style.transform = `translateX(${cardDim * this.tvMoveCount}px)`;
             this.$refs.tv_arrow_prev.style.transform = `translateX(${cardDim * this.tvMoveCount}px)`;
@@ -144,7 +135,6 @@
                 return;
             }
             this.tvMoveCount -= 2;
-            console.log(this.tvMoveCount);
             this.moveNextTv();
         },
         resetMoveTv(){

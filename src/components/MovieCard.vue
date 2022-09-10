@@ -18,11 +18,7 @@
 
                 <strong>Lingua originale: </strong>
     
-                <img :src="getSrc(movie.original_language)" alt="" v-if="getSrc(movie.original_language)">
-    
-                <span v-else>
-                    {{movie.original_language}}
-                </span>
+                <GetFlags :array="movie" class="d-inline" />
 
             </div>
             
@@ -36,49 +32,25 @@
   </template>
   
   <script>
-      export default {
-          props: {
-              movie: Object
-          },
-          methods: {
-            getSrc(lang) {
-                let src = "https://flagcdn.com/16x12/";
-                switch (lang) {
-                    case "it":
-                        src += "it";
-                        break;
-                    case "es":
-                        src += "es";
-                        break;
-                    case "en":
-                        src += "gb-eng";
-                        break;
-                    case "ko":
-                        src += "kr";
-                        break;
-                    case "ja":
-                        src += "jp";
-                        break;
-                    case "te":
-                        src += "in";
-                        break;
-                    default:
-                        return false;
-                }
-                src += ".png";
-                return src;
-            },
-            getImg(movie) {
-                if (movie.backdrop_path === null)
-                    return false;
-                return `https://image.tmdb.org/t/p/w780${movie.backdrop_path}`;
-            },
-            getVote(vote) {
-                return Math.floor(vote / 2);
-                // return vote
-            }
+    import GetFlags from "./GetFlags.vue";
+
+    export default {
+    props: {
+        movie: Object
+    },
+    methods: {
+        getImg(movie) {
+            if (movie.backdrop_path === null)
+                return false;
+            return `https://image.tmdb.org/t/p/w780${movie.backdrop_path}`;
         },
-      }
+        getVote(vote) {
+            return Math.floor(vote / 2);
+            // return vote
+        }
+    },
+    components: { GetFlags }
+}
   </script>
   
   <style scoped lang="scss">

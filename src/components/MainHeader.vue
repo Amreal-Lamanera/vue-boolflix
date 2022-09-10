@@ -63,7 +63,6 @@
                 })
 
                 .then((res) => {
-                    console.log(res.data);
                     state.query = this.query;
                     state.movies = res.data.results;
                 })
@@ -88,12 +87,11 @@
                 })
 
                 .then((res) => {
-                    console.log(res.data);
                     state.query = this.query;
                     state.tv = res.data.results;
                 })
             },
-            async clickHandler() {
+            clickHandler() {
                 this.searching = true;
                 setTimeout(() => {
                     this.$refs.searchBar.focus()
