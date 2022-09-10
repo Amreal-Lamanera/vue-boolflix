@@ -20,7 +20,7 @@
                 <div class="arrow prev" @click="movePrevMovie" ref="movie_arrow_prev">
                     <font-awesome-icon icon="fa-solid fa-arrow-left" />
                 </div>
-                <div v-for="movie in getMovies" :key="movie.id" class="card-wrapper">
+                <div v-for="movie in getMovies" :key="movie.id" class="card-wrapper" ref="card">
                     <MovieCard :movie="movie" />
                 </div>
                 <div class="arrow next" @click="moveNextMovie" ref="movie_arrow_next">
@@ -63,15 +63,16 @@
     data() {
         return {
             movieMoveCount: 0,
-            tvMoveCount: 0
+            tvMoveCount: 0,
+            cardDim: 0
         };
     },
     computed: {
-        getMovies() {
-            return state.movies;
-        },
         getQuery() {
             return state.query;
+        },
+        getMovies() {
+            return state.movies;
         },
         getTv() {
             return state.tv;
@@ -82,57 +83,69 @@
         getTvLen() {
             return state.tv.length;
         },
+        // getCardDim(){
+        //     const windowWidth = window.innerWidth;
+        //     const cardDim = windowWidth/5 -48
+        //     return windowWidth;
+        // }
     },
     methods: {
         moveNextMovie() {
-            console.log('OK2');
-            if(++this.movieMoveCount === this.getMoviesLen-5 || this.getMoviesLen <= 5) {
+            const windowWidth = window.innerWidth;
+            const cardDim = (windowWidth-48)/5;
+            
+            if(this.getMoviesLen <= 5) return;
+
+            if(++this.movieMoveCount === this.getMoviesLen-4) {
                 this.movieMoveCount = 0;
             }
-            // console.log(this.$refs.filmContainer.style)
-            this.$refs.filmContainer.style.transform = `translateX(${-300 * this.movieMoveCount}px)`;
-            this.$refs.movie_arrow_next.style.transform = `translateX(${300 * this.movieMoveCount}px)`;
-            this.$refs.movie_arrow_prev.style.transform = `translateX(${300 * this.movieMoveCount}px)`;
-            // console.log(this.$refs.filmContainer.style)
-            console.log('OK3');
+
+            console.log(this.movieMoveCount, this.getMoviesLen);
+            this.$refs.filmContainer.style.transform = `translateX(${-cardDim * this.movieMoveCount}px)`;
+            this.$refs.movie_arrow_next.style.transform = `translateX(${cardDim * this.movieMoveCount}px)`;
+            this.$refs.movie_arrow_prev.style.transform = `translateX(${cardDim * this.movieMoveCount}px)`;
         },
         movePrevMovie() {
             if(this.movieMoveCount === 0) {
-                console.log('OK');
-                this.movieMoveCount = this.getMoviesLen-7;
+                this.movieMoveCount = this.getMoviesLen-6;
                 this.moveNextMovie();
                 return;
             }
-            this.$refs.filmContainer.style.transform = `translateX(${-300 * (--this.movieMoveCount)}px)`;
-            this.$refs.movie_arrow_next.style.transform = `translateX(${300 * (this.movieMoveCount)}px)`;
-            this.$refs.movie_arrow_prev.style.transform = `translateX(${300 * (this.movieMoveCount)}px)`;
+            this.movieMoveCount -= 2;
+            console.log(this.movieMoveCount);
+            this.moveNextMovie();
         },
         resetMoveMovie(){
-            this.moviesNextCount = 0;
+            console.log('RESET');
+            this.movieMoveCount = 0;
             this.$refs.filmContainer.style.transform = `translateX(0)`;
             this.$refs.movie_arrow_next.style.transform = `translateX(0)`;
             this.$refs.movie_arrow_prev.style.transform = `translateX(0)`;
         },
         moveNextTv() {
-            console.log('OK2');
-            if(++this.tvMoveCount === this.getTvLen-5 || this.getTvLen <= 5) {
+            const windowWidth = window.innerWidth;
+            const cardDim = (windowWidth-48)/5;
+            
+            if(this.getTvLen <= 5) return;
+
+            if(++this.tvMoveCount === this.getTvLen-4) {
                 this.tvMoveCount = 0;
             }
-            this.$refs.tvContainer.style.transform = `translateX(${-300 * this.tvMoveCount}px)`;
-            this.$refs.tv_arrow_next.style.transform = `translateX(${300 * this.tvMoveCount}px)`;
-            this.$refs.tv_arrow_prev.style.transform = `translateX(${300 * this.tvMoveCount}px)`;
-            console.log('OK3');
+
+            console.log(this.tvMoveCount, this.getTvLen);
+            this.$refs.tvContainer.style.transform = `translateX(${-cardDim * this.tvMoveCount}px)`;
+            this.$refs.tv_arrow_next.style.transform = `translateX(${cardDim * this.tvMoveCount}px)`;
+            this.$refs.tv_arrow_prev.style.transform = `translateX(${cardDim * this.tvMoveCount}px)`;
         },
         movePrevTv() {
             if(this.tvMoveCount === 0) {
-                console.log('OK');
-                this.tvMoveCount = this.getTvLen-7;
+                this.tvMoveCount = this.getTvLen-6;
                 this.moveNextTv();
                 return;
             }
-            this.$refs.tvContainer.style.transform = `translateX(${-300 * (--this.tvMoveCount)}px)`;
-            this.$refs.tv_arrow_next.style.transform = `translateX(${300 * (this.tvMoveCount)}px)`;
-            this.$refs.tv_arrow_prev.style.transform = `translateX(${300 * (this.tvMoveCount)}px)`;
+            this.tvMoveCount -= 2;
+            console.log(this.tvMoveCount);
+            this.moveNextTv();
         },
         resetMoveTv(){
             this.tvMoveCount = 0;
@@ -147,12 +160,12 @@
         },
         getTv: function() {
             this.resetMoveTv();
-        }
+        },
     },
     components: {
         MovieCard,
         TvCard
-    }
+    },
 }
 
 </script>
@@ -171,12 +184,12 @@
         .my-cards{
             display: flex;
             transition: all 300ms ease-in-out;
-            padding: 0 28px;
+            // padding: 0 2rem;
             
             .arrow {
                 position: absolute;
                 height: 100%;
-                width: 53px;
+                width: 1.5rem;
                 background-color: rgba(0, 0, 0, 0.5);
                 z-index: 99;
                 display: none;
@@ -195,7 +208,7 @@
             }
 
             &>* {
-                flex-basis: 300px;
+                flex-basis: calc(100% / 5);
                 flex-shrink: 0;
             }
         }

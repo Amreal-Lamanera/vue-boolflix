@@ -70,7 +70,7 @@
             getImgTv(tv) {
                 if (tv.backdrop_path === null)
                     return false;
-                return `https://image.tmdb.org/t/p/w300${tv.backdrop_path}`;
+                return `https://image.tmdb.org/t/p/w780${tv.backdrop_path}`;
             },
             getVote(vote) {
                 return Math.floor(vote / 2);

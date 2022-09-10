@@ -71,7 +71,7 @@
             getImg(movie) {
                 if (movie.backdrop_path === null)
                     return false;
-                return `https://image.tmdb.org/t/p/w300${movie.backdrop_path}`;
+                return `https://image.tmdb.org/t/p/w780${movie.backdrop_path}`;
             },
             getVote(vote) {
                 return Math.floor(vote / 2);
