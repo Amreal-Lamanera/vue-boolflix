@@ -10,7 +10,7 @@
         </span>
     </h2>
 
-    <div class="films mb-5">
+    <div class="films mb-5" v-if="getMoviesLen !== 0">
 
         <h3>
             Film
@@ -31,7 +31,8 @@
 
     </div>
 
-    <div class="series">
+    <div class="series" v-if="getTvLen !== 0">
+
         <h3>
             Serie
         </h3>
@@ -64,7 +65,9 @@
         return {
             movieMoveCount: 0,
             tvMoveCount: 0,
+            windowWidth: window.innerWidth,
             dim: null,
+            padding: 48
         };
     },
     computed: {
@@ -85,22 +88,23 @@
         },
     },
     methods: {
+        onResize() {
+            this.windowWidth = window.innerWidth;
+        },
         moveNextMovie() {
-            const windowWidth = window.innerWidth;
-            const padding = 48;
-            let dim;
-            if(windowWidth < 576)   dim = 1;
-            else if(windowWidth < 768)  dim = 2;
-            else if(windowWidth < 992)  dim = 3;
-            else if(windowWidth < 1200) dim = 4;
-            else dim = 5;
-            this.dim = dim;
 
-            const cardDim = (windowWidth-padding)/dim;
+            const cardDim = (this.windowWidth-this.padding)/this.dim;
             
-            if(this.getMoviesLen <= dim) return;
+            if(this.getMoviesLen <= this.dim) return;
 
-            if(++this.movieMoveCount === this.getMoviesLen-dim+1) {
+            // console.log(
+            //     'CALCOLO', this.getMoviesLen-this.dim,
+            //     'LEN', this.getMoviesLen,
+            //     'DIM', this.dim,
+            //     'WIND', this.windowWidth
+            // );
+            
+            if(++this.movieMoveCount === this.getMoviesLen-this.dim+1) {
                 this.movieMoveCount = 0;
             }
 
@@ -109,17 +113,8 @@
             this.$refs.movie_arrow_prev.style.transform = `translateX(${cardDim * this.movieMoveCount}px)`;
         },
         movePrevMovie() {
-            const windowWidth = window.innerWidth;
-            let dim;
-            if(windowWidth < 576)   dim = 1;
-            else if(windowWidth < 768)  dim = 2;
-            else if(windowWidth < 992)  dim = 3;
-            else if(windowWidth < 1200) dim = 4;
-            else dim = 5;
-            this.dim = dim;
-
             if(this.movieMoveCount === 0) {
-                this.movieMoveCount = this.getMoviesLen-dim-1;
+                this.movieMoveCount = this.getMoviesLen-this.dim-1;
                 this.moveNextMovie();
                 return;
             }
@@ -128,25 +123,20 @@
         },
         resetMoveMovie(){
             this.movieMoveCount = 0;
-            this.$refs.filmContainer.style.transform = `translateX(0)`;
-            this.$refs.movie_arrow_next.style.transform = `translateX(0)`;
-            this.$refs.movie_arrow_prev.style.transform = `translateX(0)`;
+            try{
+                this.$refs.filmContainer.style.transform = `translateX(0)`;
+                this.$refs.movie_arrow_next.style.transform = `translateX(0)`;
+                this.$refs.movie_arrow_prev.style.transform = `translateX(0)`;
+            } catch {
+                return;
+            }
         },
         moveNextTv() {
-            const windowWidth = window.innerWidth;
-            const padding = 48;
-            let dim;
-            if(windowWidth < 576)   dim = 1;
-            else if(windowWidth < 768)  dim = 2;
-            else if(windowWidth < 992)  dim = 3;
-            else if(windowWidth < 1200) dim = 4;
-            else dim = 5;
-            this.dim = dim;
-            const cardDim = (windowWidth-padding)/dim;
+            const cardDim = (this.windowWidth-this.padding)/this.dim;
             
-            if(this.getTvLen <= dim) return;
+            if(this.getTvLen <= this.dim) return;
 
-            if(++this.tvMoveCount === this.getTvLen-dim+1) {
+            if(++this.tvMoveCount === this.getTvLen-this.dim+1) {
                 this.tvMoveCount = 0;
             }
 
@@ -155,16 +145,8 @@
             this.$refs.tv_arrow_prev.style.transform = `translateX(${cardDim * this.tvMoveCount}px)`;
         },
         movePrevTv() {
-            const windowWidth = window.innerWidth;
-            let dim;
-            if(windowWidth < 576)   dim = 1;
-            else if(windowWidth < 768)  dim = 2;
-            else if(windowWidth < 992)  dim = 3;
-            else if(windowWidth < 1200) dim = 4;
-            else dim = 5;
-            this.dim = dim;
             if(this.tvMoveCount === 0) {
-                this.tvMoveCount = this.getTvLen-dim-1;
+                this.tvMoveCount = this.getTvLen-this.dim-1;
                 this.moveNextTv();
                 return;
             }
@@ -173,9 +155,13 @@
         },
         resetMoveTv(){
             this.tvMoveCount = 0;
-            this.$refs.tvContainer.style.transform = `translateX(0)`;
-            this.$refs.tv_arrow_next.style.transform = `translateX(0)`;
-            this.$refs.tv_arrow_prev.style.transform = `translateX(0)`;
+            try{
+                this.$refs.tvContainer.style.transform = `translateX(0)`;
+                this.$refs.tv_arrow_next.style.transform = `translateX(0)`;
+                this.$refs.tv_arrow_prev.style.transform = `translateX(0)`;
+            } catch {
+                return;
+            }
         }
     },
     watch: {
@@ -185,8 +171,14 @@
         getTv: function() {
             this.resetMoveTv();
         },
-        dim: function() {
+        windowWidth: function() {
+            if(this.windowWidth < 576)   this.dim = 1;
+            else if(this.windowWidth < 768)  this.dim = 2;
+            else if(this.windowWidth < 992)  this.dim = 3;
+            else if(this.windowWidth < 1200) this.dim = 4;
+            else this.dim = 5;
             this.movieMoveCount -= 1;
+            console.log(this.movieMoveCount);
             this.moveNextMovie();
             this.tvMoveCount -= 1;
             this.moveNextTv();
@@ -195,6 +187,16 @@
     components: {
         MovieCard,
         TvCard
+    },
+    mounted() {
+        this.$nextTick(() => {
+            window.addEventListener('resize', this.onResize);
+            if(this.windowWidth < 576)   this.dim = 1;
+            else if(this.windowWidth < 768)  this.dim = 2;
+            else if(this.windowWidth < 992)  this.dim = 3;
+            else if(this.windowWidth < 1200) this.dim = 4;
+            else this.dim = 5;
+        })
     },
 }
 
