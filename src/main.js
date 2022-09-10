@@ -34,11 +34,17 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { faStar as faStarSol } from '@fortawesome/free-solid-svg-icons'
 import { faStar as faStarReg } from '@fortawesome/free-regular-svg-icons'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+
 
 /* add icons to the library */
 library.add(faMagnifyingGlass)
 library.add(faStarSol)
 library.add(faStarReg)
+library.add(faArrowLeft)
+library.add(faArrowRight)
+
 
 /* add font awesome icon component */
 Vue.component('font-awesome-icon', FontAwesomeIcon)
