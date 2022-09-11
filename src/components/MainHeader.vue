@@ -125,7 +125,7 @@
         this.fetchTv();
     },
 
-    mounted() {
+    created() {
         this.$nextTick(() => {
             window.addEventListener('resize', this.onResize);
         })

@@ -30,6 +30,9 @@
 
             <div>
                 <strong>Attori: </strong>
+                <span v-for="actor,i in getActors()" :key="i">
+                    {{ actor }}{{ i === getActors().length-1 ? '' : ', ' }}
+                </span>
             </div>
         </div>
     </div>
@@ -42,7 +45,7 @@
     export default {
     props: {
         movie: Object,
-        // actors: Array
+        actors: Array
     },
     
     methods: {
@@ -54,13 +57,18 @@
         getVote(vote) {
             return Math.floor(vote / 2);
         },
-        // getActors() {
-        //     const fiveActors = [];
-        //     for (let i = 0; i < 5; i++) {
-        //         fiveActors.push(this.actors[i].name)
-        //     }
-        //     return fiveActors;
-        // }
+        getActors() {
+            const fiveActors = [];
+            if(!this.actors){
+                return;
+            }
+            for (let i = 0; i < 5; i++) {
+                if(i === this.actors.length) break;
+                fiveActors.push(this.actors[i].name)
+                // console.log(this.actors[i].name);
+            }
+            return fiveActors;
+        }
     },
     components: {
         GetFlags

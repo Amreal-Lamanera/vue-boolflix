@@ -12,9 +12,9 @@
                 <div class="arrow prev" @click="movePrevMovie" ref="movie_arrow_prev">
                     <font-awesome-icon icon="fa-solid fa-arrow-left" />
                 </div>
-                <div v-for="movie in getMovies" :key="movie.id" class="card-wrapper" ref="card">
-                    <!-- :actors="casts[i]" -> loop infinito -->
-                    <MovieCard :movie="movie" />
+                <div v-for="movie,i in getMovies" :key="movie.id" class="card-wrapper" ref="card">
+                    <!-- TODO: :actors="casts[i]" -> loop infinito -->
+                    <MovieCard :movie="movie" :actors="casts[i]"/>
                 </div>
                 <div class="arrow next" @click="moveNextMovie" ref="movie_arrow_next">
                     <font-awesome-icon icon="fa-solid fa-arrow-right" />
@@ -163,7 +163,7 @@
         },
         fetchActors() {
             //TODO: CHIEDERE: PERCHE' LO FA 2 VOLTE?
-            console.log(state.movies);
+            // console.log(state.movies);
             const casts = [];
             state.movies.forEach(element => {
                 axios
@@ -178,12 +178,14 @@
                 });
             });
             this.casts = casts;
-            console.log(this.casts);
+            console.log('CASTS: ', this.casts);
         }
     },
     watch: {
         getMovies: function() {
             this.resetMoveMovie();
+            //TODO: UNICA SOLUZIONE
+            this.fetchActors();
         },
         getTv: function() {
             this.resetMoveTv();
@@ -213,9 +215,6 @@
             else if(this.windowWidth < 1200) this.dim = 4;
             else this.dim = 5;
         })
-    },
-    beforeUpdate() {
-        this.fetchActors();
     },
 }
 
