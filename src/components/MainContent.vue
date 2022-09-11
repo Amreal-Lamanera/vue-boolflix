@@ -99,7 +99,7 @@
             // );
             
             if(this.movieMoveCount === this.getMoviesLen-this.dim) {
-                this.movieMoveCount = 0;
+                this.movieMoveCount = -1;
             }
 
             this.$refs.filmContainer.style.transform = `translateX(${-cardDim * (this.movieMoveCount + 1)}px)`;
@@ -133,7 +133,7 @@
             if(this.getTvLen <= this.dim) return;
 
             if(this.tvMoveCount === this.getTvLen-this.dim) {
-                this.tvMoveCount = 0;
+                this.tvMoveCount = -1;
             }
 
             this.$refs.tvContainer.style.transform = `translateX(${-cardDim * (this.tvMoveCount + 1)}px)`;
