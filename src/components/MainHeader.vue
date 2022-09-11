@@ -70,6 +70,7 @@
                 .then((res) => {
                     state.query = this.query;
                     state.movies = res.data.results;
+                    console.log('MOVIES: ', state.movies);
                 });
         },
 
@@ -94,6 +95,24 @@
                     state.tv = res.data.results;
                 });
         },
+
+        fetchGenres(){
+            axios
+                .get(`${state.baseUri}/genre/movie/list`, {
+                    params:{
+                        api_key: state.apiKey
+                    }
+                })
+                .then((res) => {
+                    const genres = new Array();
+                    res.data.genres.forEach(element => {
+                        genres.push(element.id);
+                    })
+                    state.genres = genres;
+                    console.log('GENRES: ', state.genres);
+                });
+        },
+
         clickHandler() {
             this.searching = true;
             setTimeout(() => {
@@ -123,6 +142,7 @@
     beforeMount() {
         this.fetchMovies();
         this.fetchTv();
+        this.fetchGenres();
     },
 
     created() {

@@ -7,7 +7,8 @@ const state = Vue.observable({
     tv: [],
     apiKey: '604eb69c5e2149adb681169e8dc9e532',
     query: '',
-    baseUri: 'https://api.themoviedb.org/3'
+    baseUri: 'https://api.themoviedb.org/3',
+    genres: []
 });
 
 // esportiamo state per poterla importare negli altri componenti

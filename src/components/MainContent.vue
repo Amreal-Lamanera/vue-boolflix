@@ -12,8 +12,7 @@
                 <div class="arrow prev" @click="movePrevMovie" ref="movie_arrow_prev">
                     <font-awesome-icon icon="fa-solid fa-arrow-left" />
                 </div>
-                <div v-for="movie,i in getMovies" :key="movie.id" class="card-wrapper" ref="card">
-                    <!-- TODO: :actors="casts[i]" -> loop infinito -->
+                <div v-for="movie,i in getMovies" :key="movie.id" class="card-wrapper">
                     <MovieCard :movie="movie" :actors="casts[i]"/>
                 </div>
                 <div class="arrow next" @click="moveNextMovie" ref="movie_arrow_next">
@@ -22,6 +21,27 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="films action mb-5" v-if="getMoviesLen !== 0">
+        <h3>
+            Film di azione
+        </h3>
+        <div class="card-container">
+            <div class="my-cards" ref="actionContainer">
+                <div class="arrow prev" @click="movePrevAction" ref="action_arrow_prev">
+                    <font-awesome-icon icon="fa-solid fa-arrow-left" />
+                </div>
+                
+                    <div v-for="movie,i in getActionMovies" :key="i" class="card-wrapper">
+                        <MovieCard :movie="movie" />
+                    </div>
+
+                <div class="arrow next" @click="moveNextAction" ref="action_arrow_next">
+                    <font-awesome-icon icon="fa-solid fa-arrow-right" />
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="series" v-if="getTvLen !== 0">
@@ -54,16 +74,25 @@
     import TvCard from './TvCard.vue';
 
     export default {
+    /**************************************************
+        DATA
+    **************************************************/
     data() {
         return {
             movieMoveCount: 0,
             tvMoveCount: 0,
+            actionMoveCount: 0,
             windowWidth: window.innerWidth,
             dim: null,
             padding: 48,
-            casts: []
+            casts: [],
+            prova: 'filmContainer'
         };
     },
+
+    /**************************************************
+        COMPUTED
+    **************************************************/
     computed: {
         getQuery() {
             return state.query;
@@ -80,11 +109,33 @@
         getTvLen() {
             return state.tv.length;
         },
+        getMoviesGenres() {
+            return state.genres;
+        },
+        getActionMovies() {
+            const actionMovies = new Array();
+            state.movies.forEach(element => {
+                for (let i = 0; i < element.genre_ids.length; i++) {
+                    const genreId = element.genre_ids[i];
+                    if(state.genres[0] === genreId) actionMovies.push(element);
+                }
+            });
+            console.log('ACTION MOVIES: ', actionMovies);
+            return actionMovies;
+        }
     },
+
+    /**************************************************
+        METHODS
+    **************************************************/
     methods: {
         onResize() {
             this.windowWidth = window.innerWidth;
         },
+
+        /**************************************************
+            MOVIES
+        **************************************************/
         moveNextMovie() {
 
             const cardDim = (this.windowWidth-this.padding)/this.dim;
@@ -127,6 +178,49 @@
                 return;
             }
         },
+
+        /**************************************************
+            ACTION MOVIES
+        **************************************************/
+        moveNextAction() {
+
+            const cardDim = (this.windowWidth-this.padding)/this.dim;
+
+            if(this.getActionMovies.length <= this.dim) return;
+
+            if(this.actionMoveCount === this.getActionMovies.length-this.dim) {
+                this.actionMoveCount = -1;
+            }
+
+            this.$refs.actionContainer.style.transform = `translateX(${-cardDim * (this.actionMoveCount + 1)}px)`;
+            this.$refs.action_arrow_next.style.transform = `translateX(${cardDim * (this.actionMoveCount + 1)}px)`;
+            this.$refs.action_arrow_prev.style.transform = `translateX(${cardDim * (this.actionMoveCount + 1)}px)`;
+
+            this.actionMoveCount++;
+        },
+        movePrevAction() {
+            if(this.actionMoveCount === 0) {
+                this.actionMoveCount = this.getActionMovies.length-this.dim-1;
+                this.moveNextAction();
+                return;
+            }
+            this.actionMoveCount-=2;
+            this.moveNextAction();
+            },
+        resetMoveAction(){
+            this.actionMoveCount = 0;
+            try{
+                this.$refs.actionContainer.style.transform = `translateX(0)`;
+                this.$refs.action_arrow_next.style.transform = `translateX(0)`;
+                this.$refs.action_arrow_prev.style.transform = `translateX(0)`;
+            } catch {
+                return;
+            }
+        },
+
+        /**************************************************
+            TVs
+        **************************************************/
         moveNextTv() {
             const cardDim = (this.windowWidth-this.padding)/this.dim;
             
@@ -161,9 +255,11 @@
                 return;
             }
         },
+
+        /**************************************************
+            ACTORS
+        **************************************************/
         fetchActors() {
-            //TODO: CHIEDERE: PERCHE' LO FA 2 VOLTE?
-            // console.log(state.movies);
             const casts = [];
             state.movies.forEach(element => {
                 axios
@@ -178,14 +274,18 @@
                 });
             });
             this.casts = casts;
-            console.log('CASTS: ', this.casts);
         }
     },
+
+    /**************************************************
+        WATCHERS
+    **************************************************/
     watch: {
         getMovies: function() {
             this.resetMoveMovie();
             //TODO: UNICA SOLUZIONE
             this.fetchActors();
+            this.resetMoveAction();
         },
         getTv: function() {
             this.resetMoveTv();
@@ -202,10 +302,18 @@
             this.moveNextTv();
         }
     },
+
+    /**************************************************
+        COMPONENTS
+    **************************************************/
     components: {
         MovieCard,
         TvCard
     },
+
+    /**************************************************
+        MOUNTED
+    **************************************************/
     mounted() {
         this.$nextTick(() => {
             window.addEventListener('resize', this.onResize);
