@@ -27,17 +27,24 @@
                 <font-awesome-icon class="star" icon="fa-solid fa-star" v-for="n,i in getVote(movie.vote_average)" :key="i" />
                 <font-awesome-icon class="star" icon="fa-regular fa-star" v-for="n,i in (5 - getVote(movie.vote_average))" :key="5-i" />
             </div>
+
+            <div>
+                <strong>Attori: </strong>
+            </div>
         </div>
     </div>
   </template>
   
   <script>
+
     import GetFlags from "./GetFlags.vue";
 
     export default {
     props: {
-        movie: Object
+        movie: Object,
+        // actors: Array
     },
+    
     methods: {
         getImg(movie) {
             if (movie.backdrop_path === null)
@@ -46,10 +53,18 @@
         },
         getVote(vote) {
             return Math.floor(vote / 2);
-            // return vote
-        }
+        },
+        // getActors() {
+        //     const fiveActors = [];
+        //     for (let i = 0; i < 5; i++) {
+        //         fiveActors.push(this.actors[i].name)
+        //     }
+        //     return fiveActors;
+        // }
     },
-    components: { GetFlags }
+    components: {
+        GetFlags
+    }
 }
   </script>
   

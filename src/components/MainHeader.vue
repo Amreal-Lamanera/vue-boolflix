@@ -2,7 +2,7 @@
   
   <header class="d-flex justify-content-between p-3 align-items-center">
 
-    <div class="logo" @click="query='', fetchMovies(), fetchTv()">
+    <div class="logo" @click="query='', onChange(category)">
         <h1 class="text-uppercase">
             boolflix
         </h1>
@@ -62,14 +62,17 @@
                     language: "it-IT",
                 };
             axios
+
                 .get(`${state.baseUri}${this.queryTypeMovie}`, {
-                params: parameters
-            })
+                    params: parameters
+                })
+
                 .then((res) => {
-                state.query = this.query;
-                state.movies = res.data.results;
-            });
+                    state.query = this.query;
+                    state.movies = res.data.results;
+                });
         },
+
         fetchTv() {
             this.queryTypeTv = this.query === "" ?
                 "/tv/popular" :
@@ -81,14 +84,15 @@
                     query: this.query,
                     language: "it-IT",
                 };
+
             axios
                 .get(`${state.baseUri}${this.queryTypeTv}`, {
-                params: parameters
-            })
+                    params: parameters
+                })
                 .then((res) => {
-                state.query = this.query;
-                state.tv = res.data.results;
-            });
+                    state.query = this.query;
+                    state.tv = res.data.results;
+                });
         },
         clickHandler() {
             this.searching = true;
@@ -115,10 +119,12 @@
             this.windowWidth = window.innerWidth;
         }
     },
+
     beforeMount() {
         this.fetchMovies();
         this.fetchTv();
     },
+
     mounted() {
         this.$nextTick(() => {
             window.addEventListener('resize', this.onResize);

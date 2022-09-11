@@ -1,19 +1,11 @@
 <template>
 
   <main class="container-fluid overflow-hidden p-4">
-    <h2 class="pb-5">
-        <span v-if="getQuery === ''">
-            Popolari su Boolflix:
-        </span>
-        <span v-else>
-            Risultato ricerca:
-        </span>
-    </h2>
 
     <div class="films mb-5" v-if="getMoviesLen !== 0">
 
         <h3>
-            Film
+            Film {{ getQuery === '' ? 'popolari su Boolflix' : 'trovati'}}
         </h3>
         <div class="card-container">
             <div class="my-cards" ref="filmContainer">
@@ -21,6 +13,7 @@
                     <font-awesome-icon icon="fa-solid fa-arrow-left" />
                 </div>
                 <div v-for="movie in getMovies" :key="movie.id" class="card-wrapper" ref="card">
+                    <!-- :actors="casts[i]" -> loop infinito -->
                     <MovieCard :movie="movie" />
                 </div>
                 <div class="arrow next" @click="moveNextMovie" ref="movie_arrow_next">
@@ -34,7 +27,7 @@
     <div class="series" v-if="getTvLen !== 0">
 
         <h3>
-            Serie
+            Serie {{ getQuery === '' ? 'popolari su Boolflix' : 'trovate'}}
         </h3>
         <div class="card-container">
             <div class="my-cards" ref="tvContainer">
@@ -55,7 +48,7 @@
 </template>
 
 <script>
-    // import axios from 'axios';
+    import axios from 'axios';
     import state from '../store';
     import MovieCard from './MovieCard.vue';
     import TvCard from './TvCard.vue';
@@ -67,7 +60,8 @@
             tvMoveCount: 0,
             windowWidth: window.innerWidth,
             dim: null,
-            padding: 48
+            padding: 48,
+            casts: []
         };
     },
     computed: {
@@ -104,13 +98,15 @@
             //     'WIND', this.windowWidth
             // );
             
-            if(++this.movieMoveCount === this.getMoviesLen-this.dim+1) {
+            if(this.movieMoveCount === this.getMoviesLen-this.dim) {
                 this.movieMoveCount = 0;
             }
 
-            this.$refs.filmContainer.style.transform = `translateX(${-cardDim * this.movieMoveCount}px)`;
-            this.$refs.movie_arrow_next.style.transform = `translateX(${cardDim * this.movieMoveCount}px)`;
-            this.$refs.movie_arrow_prev.style.transform = `translateX(${cardDim * this.movieMoveCount}px)`;
+            this.$refs.filmContainer.style.transform = `translateX(${-cardDim * (this.movieMoveCount + 1)}px)`;
+            this.$refs.movie_arrow_next.style.transform = `translateX(${cardDim * (this.movieMoveCount + 1)}px)`;
+            this.$refs.movie_arrow_prev.style.transform = `translateX(${cardDim * (this.movieMoveCount + 1)}px)`;
+
+            this.movieMoveCount++;
         },
         movePrevMovie() {
             if(this.movieMoveCount === 0) {
@@ -118,7 +114,7 @@
                 this.moveNextMovie();
                 return;
             }
-            this.movieMoveCount -= 2;
+            this.movieMoveCount-=2;
             this.moveNextMovie();
         },
         resetMoveMovie(){
@@ -136,13 +132,15 @@
             
             if(this.getTvLen <= this.dim) return;
 
-            if(++this.tvMoveCount === this.getTvLen-this.dim+1) {
+            if(this.tvMoveCount === this.getTvLen-this.dim) {
                 this.tvMoveCount = 0;
             }
 
-            this.$refs.tvContainer.style.transform = `translateX(${-cardDim * this.tvMoveCount}px)`;
-            this.$refs.tv_arrow_next.style.transform = `translateX(${cardDim * this.tvMoveCount}px)`;
-            this.$refs.tv_arrow_prev.style.transform = `translateX(${cardDim * this.tvMoveCount}px)`;
+            this.$refs.tvContainer.style.transform = `translateX(${-cardDim * (this.tvMoveCount + 1)}px)`;
+            this.$refs.tv_arrow_next.style.transform = `translateX(${cardDim * (this.tvMoveCount + 1)}px)`;
+            this.$refs.tv_arrow_prev.style.transform = `translateX(${cardDim * (this.tvMoveCount + 1)}px)`;
+
+            this.tvMoveCount++;
         },
         movePrevTv() {
             if(this.tvMoveCount === 0) {
@@ -162,6 +160,25 @@
             } catch {
                 return;
             }
+        },
+        fetchActors() {
+            //TODO: CHIEDERE: PERCHE' LO FA 2 VOLTE?
+            console.log(state.movies);
+            const casts = [];
+            state.movies.forEach(element => {
+                axios
+                .get(`${state.baseUri}/movie/${element.id}/credits`, {
+                    params: {
+                        api_key: state.apiKey,
+                        language: "it-IT",
+                    }
+                })
+                .then((res) => {
+                    casts.push(res.data.cast)
+                });
+            });
+            this.casts = casts;
+            console.log(this.casts);
         }
     },
     watch: {
@@ -196,6 +213,9 @@
             else if(this.windowWidth < 1200) this.dim = 4;
             else this.dim = 5;
         })
+    },
+    beforeUpdate() {
+        this.fetchActors();
     },
 }
 
