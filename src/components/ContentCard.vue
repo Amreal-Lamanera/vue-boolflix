@@ -1,5 +1,5 @@
 <template>
-    <div class="my_card position-relative">
+    <div class="my_card position-relative" @click="getActors">
         <h3 class="content-title">
             {{ content.title }}
         </h3>
@@ -31,10 +31,14 @@
                 <font-awesome-icon class="star" icon="fa-regular fa-star" v-for="n,i in 5 - content.vote" :key="5-i" />
             </div>
 
-            <div>
+            <div v-if="!castDone">
+                <span>Clicca per mostrare gli attori principali...</span>
+            </div>
+
+            <div v-else>
                 <strong>Attori: </strong>
-                <span v-for="actor,i in getActors()" :key="i">
-                    {{ actor }}{{ i === getActors().length-1 ? '' : ', ' }}
+                <span v-for="actor,i in cast" :key="i">
+                    {{ actor }}{{ i === cast.length-1 ? '' : ', ' }}
                 </span>
             </div>
         </div>
@@ -43,26 +47,53 @@
   
   <script>
 
+    import axios from 'axios';
+    import state from '../store';
+
     import GetFlags from "./GetFlags.vue";
 
     export default {
     props: {
         content: Object,
-        actors: Array
+        // actors: Array
+        tv: Boolean
+    },
+
+    data() {
+        return {
+            cast: [],
+            castDone: false
+        }
     },
     
     methods: {
         getActors() {
-            const fiveActors = [];
-            if(!this.actors){
-                return;
+            if(!this.castDone){
+                const cast = [];
+                if(this.content.length === 0) return;
+                
+                axios
+                .get(`${state.baseUri}/${this.tv ? 'tv' : 'movie'}/${this.content.id}/credits`, {
+                    params: {
+                        api_key: state.apiKey,
+                        language: "it-IT",
+                    }
+                })
+                .then((res) => {
+                    const resolution = res.data.cast;
+                    for (let i = 0; i < 5; i++) {
+                        if(i === resolution.length){
+                            break;
+                        }
+                        cast.push(resolution[i].name)
+                    }
+                })
+                .finally(() => {
+                    console.log('CAST: ', cast);
+                    this.cast = cast;
+                    this.castDone = true
+                })
             }
-            for (let i = 0; i < 5; i++) {
-                if(i === this.actors.length) break;
-                fiveActors.push(this.actors[i].name)
-                // console.log(this.actors[i].name);
-            }
-            return fiveActors;
         }
     },
     components: {
