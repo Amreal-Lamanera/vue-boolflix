@@ -76,7 +76,10 @@
                 "/movie/popular" :
                 "/search/movie";
             const parameters = this.queryTypeMovie === "/movie/popular" ?
-                { api_key: state.apiKey } :
+                {
+                    api_key: state.apiKey
+                 }
+                :
                 {
                     api_key: state.apiKey,
                     query: this.query,
@@ -91,14 +94,59 @@
                 .then((res) => {
                     state.query = this.query;
                     this.originalMovies = res.data.results;
-                    console.log('OG MOVIES: ', this.originalMovies);
+                    console.log('OG MOVIES: ', res);
                     this.getMovies();
+                    this.fetchActionMovies();
                 });
+        },
+
+        fetchActionMovies() {
+            const actionMovies = new Array();
+            state.movies.forEach(element => {
+                for (let i = 0; i < element.genres.length; i++) {
+                    const genreId = element.genres[i];
+                    if(state.genres[0] === genreId) actionMovies.push(element);
+                }
+            });
+            if(actionMovies.length < 20) {
+                const queryTypeMovie = "/movie/popular";
+                const parameters =
+                {
+                    api_key: state.apiKey,
+                    page: 2
+                 }
+                axios
+
+                    .get(`${state.baseUri}${queryTypeMovie}`, {
+                        params: parameters
+                    })
+
+                    .then((res) => {
+                        let i = 0;
+                        const result = res.data.results;
+                        while(actionMovies.length < 20 && i < actionMovies.length){
+                            if(result[i].genre_ids.includes(state.genres[0])) {
+                                const newObj = 
+                                {
+                                    id: result[i].id,
+                                    title: result[i].title,
+                                    original_title: result[i].original_title,
+                                    lang: result[i].original_language,
+                                    backdrop: result[i].backdrop_path ? `https://image.tmdb.org/t/p/w780${result[i].backdrop_path}` : null,
+                                    genres: result[i].genre_ids,
+                                    vote: Math.round(result[i].vote_average/2)
+                                }
+                                if(!(state.movies.some(e => e.id === newObj.id))) actionMovies.push(newObj)
+                            }
+                            i++;
+                        }
+                    });
+            }
+            state.actionMovies = actionMovies;
         },
 
         getTvs(){
             const newTvs = this.originalTvs.map(el => {
-                //  ? `https://image.tmdb.org/t/p/w780${el.backdrop_path}` : null,
                 const tvs = {
                     id: el.id,
                     title: el.name,
@@ -133,9 +181,57 @@
                 .then((res) => {
                     state.query = this.query;
                     this.originalTvs = res.data.results;
-                    console.log('OG TVS: ', this.originalTvs);
+                    console.log('OG TVS: ', res.data);
                     this.getTvs();
+                    this.fetchActionTvs();
                 });
+        },
+
+        fetchActionTvs() {
+            const actionTv = new Array();
+            state.tv.forEach(element => {
+                for (let i = 0; i < element.genres.length; i++) {
+                    const genreId = element.genres[i];
+                    if(state.genresTv[0] === genreId) actionTv.push(element);
+                }
+            });
+            if(actionTv.length < 20) {
+                const queryTypeTv = "/tv/popular";
+                const parameters =
+                {
+                    api_key: state.apiKey,
+                    page: 2
+                 }
+                axios
+
+                    .get(`${state.baseUri}${queryTypeTv}`, {
+                        params: parameters
+                    })
+
+                    .then((res) => {
+                        console.log('PG 2 TV', res.data);
+                        let i = 0;
+                        const result = res.data.results;
+                        while(actionTv.length < 20 && i < actionTv.length){
+                            if(result[i].genre_ids.includes(state.genresTv[0])) {
+                                const newObj =
+                                {
+                                    id: result[i].id,
+                                    title: result[i].name,
+                                    original_name: result[i].original_name,
+                                    lang: result[i].original_language,
+                                    backdrop: result[i].backdrop_path ? `https://image.tmdb.org/t/p/w780${result[i].backdrop_path}` : null,
+                                    genres: result[i].genre_ids,
+                                    vote: Math.round(result[i].vote_average/2)
+                                }
+                                if(!(state.tv.some(e => e.id === newObj.id))) actionTv.push(newObj)
+                            }
+                            i++;
+                        }
+                    });
+            }
+            console.log('ACTION TVS: ', actionTv);
+            state.actionTv = actionTv;
         },
 
         fetchGenres(){
@@ -147,11 +243,28 @@
                 })
                 .then((res) => {
                     const genres = new Array();
+                    console.log(res.data.genres);
                     res.data.genres.forEach(element => {
                         genres.push(element.id);
                     })
                     state.genres = genres;
                     console.log('GENRES: ', state.genres);
+                });
+            
+            axios
+                .get(`${state.baseUri}/genre/tv/list`, {
+                    params:{
+                        api_key: state.apiKey
+                    }
+                })
+                .then((res) => {
+                    const genres = new Array();
+                    console.log(res.data.genres);
+                    res.data.genres.forEach(element => {
+                        genres.push(element.id);
+                    })
+                    state.genresTv = genres;
+                    console.log('GENRES TV: ', state.genres);
                 });
         },
 
@@ -161,6 +274,7 @@
                 this.$refs.searchBar.focus();
             }, 200);
         },
+
         onChange(index) {
             if(index === 1){
                 this.fetchMovies();
@@ -175,7 +289,9 @@
                 this.fetchTv();
             }
             this.activeCat = index;
+            state.activeCat = index;
         },
+
         onResize() {
             this.windowWidth = window.innerWidth;
         }

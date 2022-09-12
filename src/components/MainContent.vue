@@ -2,7 +2,7 @@
 
   <main class="container-fluid overflow-hidden p-5">
 
-    <div class="films mb-5" v-if="movies.length !== 0">
+    <div class="films mb-5" v-if="movies.length !== 0 && activeCat < 2">
 
         <h3>
             Film {{ query === '' ? 'popolari su Boolflix' : 'trovati'}}
@@ -11,7 +11,7 @@
 
     </div>
 
-    <div class="films action mb-5" v-if="movies.length !== 0">
+    <div class="films action mb-5" v-if="actionMovies.length !== 0 && (activeCat === 1 || activeCat === 3)">
         <h3>
             Film di azione
         </h3>
@@ -35,39 +35,35 @@
 
     export default {
 
-    /**************************************************
-        COMPUTED
-    **************************************************/
-    computed: {
-        query() {
-            return state.query;
+        /**************************************************
+            COMPUTED
+        **************************************************/
+        computed: {
+            query() {
+                return state.query;
+            },
+            movies() {
+                console.log('MOVIES: ', state.movies);
+                return state.movies;
+            },
+            tvs() {
+                return state.tv;
+            },
+            activeCat() {
+                return state.activeCat;
+            },
+            actionMovies() {
+                return state.actionMovies;
+            }
         },
-        movies() {
-            console.log('MOVIES: ', state.movies);
-            return state.movies;
-        },
-        tvs() {
-            return state.tv;
-        },
-        actionMovies() {
-            const actionMovies = new Array();
-            state.movies.forEach(element => {
-                for (let i = 0; i < element.genres.length; i++) {
-                    const genreId = element.genres[i];
-                    if(state.genres[0] === genreId) actionMovies.push(element);
-                }
-            });
-            console.log('ACTION MOVIES: ', actionMovies);
-            return actionMovies;
-        }
-    },
 
-    /**************************************************
-        COMPONENTS
-    **************************************************/
-    components: {
-    CardContainer
-},
+
+        /**************************************************
+            COMPONENTS
+        **************************************************/
+        components: {
+            CardContainer
+        },
 
 }
 
