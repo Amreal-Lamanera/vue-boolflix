@@ -64,7 +64,7 @@
         moveNext() {
 
             const cardDim = (this.windowWidth-this.padding)/this.dim;
-            console.log(cardDim);
+            // console.log(cardDim);
             
             if(this.contentLen <= this.dim) return;
             
@@ -117,7 +117,7 @@
                 });
             });
             this.casts = casts;
-            console.log('FETCH ACTORS');
+            // console.log('FETCH ACTORS');
         }
     },
 

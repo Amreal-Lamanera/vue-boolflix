@@ -79,7 +79,7 @@
                 return state.query;
             },
             movies() {
-                console.log('MOVIES: ', state.movies);
+                // console.log('MOVIES: ', state.movies);
                 return state.movies;
             },
             tvs() {

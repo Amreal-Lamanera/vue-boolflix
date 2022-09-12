@@ -67,7 +67,7 @@
                 };
                 return movies;
             })
-            console.log('NEW MOVIES: ', newMovies);
+            // console.log('NEW MOVIES: ', newMovies);
             state.movies = newMovies;
         },
 
@@ -94,7 +94,7 @@
                 .then((res) => {
                     state.query = this.query;
                     this.originalMovies = res.data.results;
-                    console.log('OG MOVIES: ', res);
+                    // console.log('OG MOVIES: ', res);
                     this.getMovies();
                     this.fetchActionMovies();
                     this.fetchFantasyMovies();
@@ -250,7 +250,7 @@
                 };
                 return tvs;
             })
-            console.log('NEW TVS: ', newTvs);
+            // console.log('NEW TVS: ', newTvs);
             state.tv = newTvs;
         },
 
@@ -273,7 +273,7 @@
                 .then((res) => {
                     state.query = this.query;
                     this.originalTvs = res.data.results;
-                    console.log('OG TVS: ', res.data);
+                    // console.log('OG TVS: ', res.data);
                     this.getTvs();
                     this.fetchActionTvs();
                     this.fetchFantasyTvs();
@@ -303,7 +303,7 @@
                     })
 
                     .then((res) => {
-                        console.log('PG 2 TV', res.data);
+                        // console.log('PG 2 TV', res.data);
                         let i = 0;
                         const result = res.data.results;
                         while(actionTv.length < 20 && i < actionTv.length){
@@ -349,7 +349,7 @@
                     })
 
                     .then((res) => {
-                        console.log('PG 2 TV', res.data);
+                        // console.log('PG 2 TV', res.data);
                         let i = 0;
                         const result = res.data.results;
                         while(fantasyTv.length < 20 && i < fantasyTv.length){
@@ -395,7 +395,7 @@
                     })
 
                     .then((res) => {
-                        console.log('PG 2 TV', res.data);
+                        // console.log('PG 2 TV', res.data);
                         let i = 0;
                         const result = res.data.results;
                         while(crimeTv.length < 20 && i < crimeTv.length){
@@ -428,12 +428,12 @@
                 })
                 .then((res) => {
                     const genres = new Array();
-                    console.log(res.data.genres);
+                    // console.log(res.data.genres);
                     res.data.genres.forEach(element => {
                         genres.push(element.id);
                     })
                     state.genres = genres;
-                    console.log('GENRES: ', state.genres);
+                    // console.log('GENRES: ', state.genres);
                 });
             
             axios
@@ -444,12 +444,12 @@
                 })
                 .then((res) => {
                     const genres = new Array();
-                    console.log(res.data.genres);
+                    // console.log(res.data.genres);
                     res.data.genres.forEach(element => {
                         genres.push(element.id);
                     })
                     state.genresTv = genres;
-                    console.log('GENRES TV: ', state.genres);
+                    // console.log('GENRES TV: ', state.genres);
                 });
         },
 
