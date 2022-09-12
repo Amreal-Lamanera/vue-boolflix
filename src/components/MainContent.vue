@@ -1,8 +1,8 @@
 <template>
 
-  <main class="container-fluid overflow-hidden p-5">
+  <main class="container-fluid p-3 p-lg-5 overflow-hidden">
 
-    <div class="films mb-5" v-if="movies.length !== 0 && activeCat < 2">
+    <div class="films" v-if="movies.length !== 0 && activeCat < 2">
 
         <h3>
             Film {{ query === '' ? 'popolari su Boolflix' : 'trovati'}}
@@ -11,21 +11,21 @@
 
     </div>
 
-    <div class="films action mb-5" v-if="actionMovies.length !== 0 && (activeCat === 1 || activeCat === 3)">
+    <div class="films action" v-if="actionMovies.length !== 0 && (activeCat === 1 || activeCat === 3)">
         <h3>
             Film di azione
         </h3>
         <CardContainer :content="actionMovies" :tv="false" />
     </div>
 
-    <div class="films action mb-5" v-if="fantasyMovies.length !== 0 && (activeCat === 1 || activeCat === 3)">
+    <div class="films action" v-if="fantasyMovies.length !== 0 && (activeCat === 1 || activeCat === 3)">
         <h3>
             Film Fantasy
         </h3>
         <CardContainer :content="fantasyMovies" :tv="false" />
     </div>
 
-    <div class="films action mb-5" v-if="crimeMovies.length !== 0 && (activeCat === 1 || activeCat === 3)">
+    <div class="films action" v-if="crimeMovies.length !== 0 && (activeCat === 1 || activeCat === 3)">
         <h3>
             Film Crime
         </h3>
@@ -40,21 +40,21 @@
         <CardContainer :content="tvs" :tv="true" class="pb-5" />
     </div>
 
-    <div class="films action mb-5" v-if="actionTvs.length !== 0 && (activeCat === 2 || activeCat === 3)">
+    <div class="films action" v-if="actionTvs.length !== 0 && (activeCat === 2 || activeCat === 3)">
         <h3>
             Serie di azione
         </h3>
         <CardContainer :content="actionTvs" :tv="true" />
     </div>
 
-    <div class="films action mb-5" v-if="fantasyTvs.length !== 0 && (activeCat === 2 || activeCat === 3)">
+    <div class="films action" v-if="fantasyTvs.length !== 0 && (activeCat === 2 || activeCat === 3)">
         <h3>
             Serie Fantasy
         </h3>
         <CardContainer :content="fantasyTvs" :tv="true" />
     </div>
 
-    <div class="films action mb-5" v-if="crimeTvs.length !== 0 && (activeCat === 2 || activeCat === 3)">
+    <div class="films action" v-if="crimeTvs.length !== 0 && (activeCat === 2 || activeCat === 3)">
         <h3>
             Serie Crime
         </h3>

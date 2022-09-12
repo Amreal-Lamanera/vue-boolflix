@@ -38,3 +38,57 @@ ul,
 menu {
     list-style: none;
 }
+
+.burger {
+    margin-left: 0.5rem;
+    padding: 0.5rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    border: 1px solid rgb(125, 125, 125);
+    border-radius: 0.5rem;
+    background-color: rgb(41, 41, 41);
+    cursor: pointer;
+}
+
+
+.hidden-menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 3.5rem;
+    background-color: rgba(0, 0, 0);
+    z-index: 999;
+    width: 0;
+    transition: width 500ms ease-in-out;
+
+    &.visible {
+        width: 100%;
+
+        ul {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 3.5rem;
+        }
+    }
+
+}
+
+.layover-menu {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    height: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    &.visible {
+        height: 100%;
+        transition: height 500ms ease-in-out;
+    }
+}

@@ -1,12 +1,20 @@
 <template>
   
-  <header class="d-flex justify-content-between p-3 align-items-center">
+  <header class="d-flex justify-content-between align-items-center">
 
     <div class="d-flex align-items-center">
         <div class="logo" @click="query='', fetchMovies(), fetchTv()">
-            <h1 class="text-uppercase m-0">
-                boolflix
-            </h1>
+            <!-- <h1 class="text-uppercase m-0 d-flex align-items-start">
+                <span class="fs_max">b</span>
+                <span class="fs_hi">o</span>
+                <span class="fs_mid">o</span>
+                <span class="fs_min">l</span>
+                <span class="fs_min">f</span>
+                <span class="fs_mid">l</span>
+                <span class="fs_hi">i</span>
+                <span class="fs_max">x</span>
+            </h1> -->
+            <img src="../assets/lamaflix.png" alt="">
         </div>
     
         <CategoryContent @changeCat="onChange" v-if="windowWidth >= 576" :active="activeCat" class="ms-4" />
@@ -30,6 +38,16 @@
 
     </div>
 
+    <div v-if="windowWidth < 576">
+        <div class="burger" @click="hiddenMenu = true">
+            =
+        </div>
+        <div class="hidden-menu" :class="hiddenMenu ? 'visible' : ''">
+            <CategoryContent @changeCat="onChange" :active="activeCat" v-if="hiddenMenu" />
+        </div>
+        <div class="layover-menu" :class="hiddenMenu ? 'visible' : ''" @click="hiddenMenu = false"></div>
+    </div>
+
   </header>
 
 </template>
@@ -51,7 +69,8 @@
             windowWidth: window.innerWidth,
             activeCat: 0,
             originalMovies: [],
-            originalTvs: []
+            originalTvs: [],
+            hiddenMenu: false
         };
     },
     methods: {
@@ -463,18 +482,6 @@
         },
 
         onChange(index) {
-            // if(index === 1){
-            //     this.fetchMovies();
-            //     state.tv = [];
-            // }
-            // else if(index === 2){
-            //     this.fetchTv();
-            //     state.movies = [];
-            // }
-            // else {
-            //     this.fetchMovies();
-            //     this.fetchTv();
-            // }
             if(!state.actionMovies.length) this.fetchActionMovies();
             if(!state.actionTv.length) this.fetchActionTvs();
             if(!state.fantasyMovies.length) this.fetchFantasyMovies();
@@ -483,6 +490,7 @@
             if(!state.crimeTv.length) this.fetchCrimeTvs();
             this.activeCat = index;
             state.activeCat = index;
+            this.hiddenMenu = false;
         },
 
         onResize() {

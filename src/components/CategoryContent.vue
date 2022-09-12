@@ -40,6 +40,7 @@
             display: flex;
             gap: 0.5rem;
             align-items: center;
+            
             @media (min-width:992px) {
                 gap: 1rem;
             }

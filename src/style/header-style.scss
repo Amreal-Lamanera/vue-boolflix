@@ -1,10 +1,38 @@
 header {
+    padding: 0.5rem 1rem;
+
+    @media (min-width:992px) {
+        padding: 1rem 3rem;
+    }
+
     .logo {
         cursor: pointer;
+        width: 30%;
+
+        img {
+            max-width: 100%;
+        }
 
         h1 {
             color: $--red;
             font-weight: bold;
+            line-height: 1;
+
+            .fs_max {
+                font-size: 2rem;
+            }
+
+            .fs_hi {
+                font-size: 1.8rem;
+            }
+
+            .fs_mid {
+                font-size: 1.6rem;
+            }
+
+            .fs_min {
+                font-size: 1.4rem;
+            }
         }
 
         @media (min-width:992px) {
