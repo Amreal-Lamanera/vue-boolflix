@@ -1,31 +1,31 @@
 <template>
     <div class="my_card position-relative">
 
-        <div v-if="getImg(movie)">
-            <img :src="getImg(movie)" alt="" class="poster">
+        <div v-if="content.backdrop">
+            <img :src="content.backdrop" alt="" class="poster">
         </div>
 
-        <div :class="getImg(movie)? 'layover' : 'default_img'">
+        <div :class="content.backdrop? 'layover' : 'default_img'">
             <div>
-                <strong>Titolo: </strong>{{ movie.title }}
+                <strong>Titolo: </strong>{{ content.title }}
             </div>
 
             <div>
-                <strong>Titolo originale: </strong>{{ movie.original_title }}
+                <strong>Titolo originale: </strong>{{ content.original_title }}
             </div>
 
             <div>
 
                 <strong>Lingua originale: </strong>
     
-                <GetFlags :array="movie" class="d-inline" />
+                <GetFlags :array="content" class="d-inline" />
 
             </div>
             
             <div>
                 <strong>Valutazione: </strong>
-                <font-awesome-icon class="star" icon="fa-solid fa-star" v-for="n,i in getVote(movie.vote_average)" :key="i" />
-                <font-awesome-icon class="star" icon="fa-regular fa-star" v-for="n,i in (5 - getVote(movie.vote_average))" :key="5-i" />
+                <font-awesome-icon class="star" icon="fa-solid fa-star" v-for="n,i in content.vote" :key="i" />
+                <font-awesome-icon class="star" icon="fa-regular fa-star" v-for="n,i in 5 - content.vote" :key="5-i" />
             </div>
 
             <div>
@@ -44,19 +44,11 @@
 
     export default {
     props: {
-        movie: Object,
+        content: Object,
         actors: Array
     },
     
     methods: {
-        getImg(movie) {
-            if (movie.backdrop_path === null)
-                return false;
-            return `https://image.tmdb.org/t/p/w780${movie.backdrop_path}`;
-        },
-        getVote(vote) {
-            return Math.floor(vote / 2);
-        },
         getActors() {
             const fiveActors = [];
             if(!this.actors){

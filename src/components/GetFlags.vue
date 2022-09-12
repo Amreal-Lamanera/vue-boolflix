@@ -1,8 +1,8 @@
 <template>
     <div>
-        <img :src="getSrc(array.original_language)" alt="" v-if="getSrc(array.original_language)">
+        <img :src="getSrc(array.lang)" alt="" v-if="getSrc(array.lang)">
         <span v-else>
-            {{array.original_language}}
+            {{array.lang}}
         </span>
     </div>
 </template>

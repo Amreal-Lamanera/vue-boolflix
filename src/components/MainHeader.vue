@@ -47,10 +47,30 @@
             queryTypeTv: "",
             category: '',
             windowWidth: window.innerWidth,
-            activeCat: 0
+            activeCat: 0,
+            originalMovies: [],
+            originalTvs: []
         };
     },
     methods: {
+        getMovies(){
+            const newMovies = this.originalMovies.map(el => {
+                //  ? `https://image.tmdb.org/t/p/w780${el.backdrop_path}` : null,
+                const movies = {
+                    id: el.id,
+                    title: el.title,
+                    original_title: el.original_title,
+                    lang: el.original_language,
+                    backdrop: el.backdrop_path ? `https://image.tmdb.org/t/p/w780${el.backdrop_path}` : null,
+                    genres: el.genre_ids,
+                    vote: Math.round(el.vote_average/2)
+                };
+                return movies;
+            })
+            console.log('NEW MOVIES: ', newMovies);
+            state.movies = newMovies;
+        },
+
         fetchMovies() {
             this.queryTypeMovie = this.query.trim() === "" ?
                 "/movie/popular" :
@@ -70,9 +90,28 @@
 
                 .then((res) => {
                     state.query = this.query;
-                    state.movies = res.data.results;
-                    console.log('MOVIES: ', state.movies);
+                    this.originalMovies = res.data.results;
+                    console.log('OG MOVIES: ', this.originalMovies);
+                    this.getMovies();
                 });
+        },
+
+        getTvs(){
+            const newTvs = this.originalTvs.map(el => {
+                //  ? `https://image.tmdb.org/t/p/w780${el.backdrop_path}` : null,
+                const tvs = {
+                    id: el.id,
+                    title: el.name,
+                    original_title: el.original_name,
+                    lang: el.original_language,
+                    backdrop: el.backdrop_path ? `https://image.tmdb.org/t/p/w780${el.backdrop_path}` : null,
+                    genres: el.genre_ids,
+                    vote: Math.round(el.vote_average/2)
+                };
+                return tvs;
+            })
+            console.log('NEW TVS: ', newTvs);
+            state.tv = newTvs;
         },
 
         fetchTv() {
@@ -93,7 +132,9 @@
                 })
                 .then((res) => {
                     state.query = this.query;
-                    state.tv = res.data.results;
+                    this.originalTvs = res.data.results;
+                    console.log('OG TVS: ', this.originalTvs);
+                    this.getTvs();
                 });
         },
 
