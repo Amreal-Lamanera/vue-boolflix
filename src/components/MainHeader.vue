@@ -46,12 +46,12 @@
             queryTypeMovie: "",
             queryTypeTv: "",
             category: '',
-            windowWidth: window.innerWidth
+            windowWidth: window.innerWidth,
         };
     },
     methods: {
         fetchMovies() {
-            this.queryTypeMovie = this.query === "" ?
+            this.queryTypeMovie = this.query.trim() === "" ?
                 "/movie/popular" :
                 "/search/movie";
             const parameters = this.queryTypeMovie === "/movie/popular" ?
@@ -75,7 +75,7 @@
         },
 
         fetchTv() {
-            this.queryTypeTv = this.query === "" ?
+            this.queryTypeTv = this.query.trim() === "" ?
                 "/tv/popular" :
                 "/search/tv";
             const parameters = this.queryTypeTv === "/tv/popular" ?

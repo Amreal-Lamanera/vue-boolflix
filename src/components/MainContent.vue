@@ -12,7 +12,12 @@
                 <div class="arrow prev" @click="movePrevMovie" ref="movie_arrow_prev">
                     <font-awesome-icon icon="fa-solid fa-arrow-left" />
                 </div>
-                <div v-for="movie,i in getMovies" :key="movie.id" class="card-wrapper">
+                <div 
+                    v-for="movie,i in getMovies"
+                    :key="movie.id"
+                    class="card-wrapper"
+                    :class="i === movieMoveCount ? 'translateR' : i === movieMoveCount + dim - 1 ? 'translateL' : ''"
+                >
                     <MovieCard :movie="movie" :actors="casts[i]"/>
                 </div>
                 <div class="arrow next" @click="moveNextMovie" ref="movie_arrow_next">
@@ -33,8 +38,13 @@
                     <font-awesome-icon icon="fa-solid fa-arrow-left" />
                 </div>
                 
-                    <div v-for="movie,i in getActionMovies" :key="i" class="card-wrapper">
-                        <MovieCard :movie="movie" />
+                    <div
+                        v-for="movie,i in getActionMovies"
+                        :key="i"
+                        class="card-wrapper"
+                        :class="i === actionMoveCount ? 'translateR' : i === actionMoveCount + dim - 1 ? 'translateL' : ''"
+                    >
+                        <MovieCard :movie="movie"/>
                     </div>
 
                 <div class="arrow next" @click="moveNextAction" ref="action_arrow_next">
@@ -54,7 +64,13 @@
                 <div class="arrow prev" @click="movePrevTv" ref="tv_arrow_prev">
                     <font-awesome-icon icon="fa-solid fa-arrow-left" />
                 </div>
-                <div v-for="tv in getTv" :key="tv.id" class="card-wrapper">
+
+                <div
+                    v-for="tv,i in getTv"
+                    :key="tv.id"
+                    class="card-wrapper"
+                    :class="i === tvMoveCount ? 'translateR' : i === tvMoveCount + dim - 1 ? 'translateL' : ''"
+                >
                     <TvCard :tv="tv" />
                 </div>
                 <div class="arrow next" @click="moveNextTv" ref="tv_arrow_next">
@@ -191,7 +207,7 @@
             if(this.actionMoveCount === this.getActionMovies.length-this.dim) {
                 this.actionMoveCount = -1;
             }
-
+            
             this.$refs.actionContainer.style.transform = `translateX(${-cardDim * (this.actionMoveCount + 1)}px)`;
             this.$refs.action_arrow_next.style.transform = `translateX(${cardDim * (this.actionMoveCount + 1)}px)`;
             this.$refs.action_arrow_prev.style.transform = `translateX(${cardDim * (this.actionMoveCount + 1)}px)`;
@@ -235,6 +251,7 @@
             this.$refs.tv_arrow_prev.style.transform = `translateX(${cardDim * (this.tvMoveCount + 1)}px)`;
 
             this.tvMoveCount++;
+            console.log(this.tvMoveCount);
         },
         movePrevTv() {
             if(this.tvMoveCount === 0) {
@@ -330,85 +347,6 @@
 
 <style lang="scss" scoped>
 
-    h3 {
-        padding-bottom: 1rem;
-    }
-
-    .card-container {
-        position: relative;
-        // width: 1200px;
-        // margin: 0 auto;
-
-        .my-cards{
-            display: flex;
-            transition: all 300ms ease-in-out;
-            // padding: 0 2rem;
-            
-            .arrow {
-                position: absolute;
-                height: 100%;
-                width: 1.5rem;
-                background-color: rgba(0, 0, 0, 0.5);
-                z-index: 99;
-                display: none;
-                justify-content: center;
-                align-items: center;
-                top: 0;
-            
-            &.next{
-                right: -1.5rem;
-            }
-            
-            &.prev{
-                left: -1.5rem;
-                
-            }
-            }
-
-            &>* {
-                flex-basis: 100%;
-                flex-shrink: 0;
-            }
-        }
-
-        &:hover .arrow{
-            display: flex;
-        }
-
-
-        .card-wrapper {
-            transition: all 300ms ease-in-out;
-            
-            &:hover {
-            transform: scale(1.2);
-            z-index: 1;
-            transition-delay: 500ms;
-            }
-        }
-    }
-
-    @media (min-width: 576px) {
-        .card-container .my-cards > * {
-            flex-basis: calc(100% / 2);
-        }
-    }
-
-    @media (min-width: 768px) {
-        .card-container .my-cards > * {
-            flex-basis: calc(100% / 3);
-        }
-    }
-
-    @media (min-width: 992px) {
-        .card-container .my-cards > * {
-            flex-basis: calc(100% / 4);
-        }
-    }
-
-    @media (min-width: 1200px) {
-        .card-container .my-cards > * {
-            flex-basis: calc(100% / 5);
-        }
-    }
+    @import '../style/card-style.scss';
 
 </style>

@@ -1,40 +1,135 @@
-.my_card {
-    // width: 100%;
-    height: 100%;
+h3 {
+    padding-bottom: 1rem;
+}
 
-    .poster {
-        width: 100%;
+.card-container {
+    position: relative;
+    // width: 1200px;
+    // margin: 0 auto;
+
+    .my-cards {
+        display: flex;
+        transition: all 300ms ease-in-out;
+        // padding: 0 2rem;
+
+        .arrow {
+            position: absolute;
+            height: 100%;
+            width: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+
+            &.next {
+                right: -1.5rem;
+            }
+
+            &.prev {
+                left: -1.5rem;
+
+            }
+        }
+
+        &>* {
+            flex-basis: 100%;
+            flex-shrink: 0;
+        }
     }
 
-    .default_img {
-        background-color: rgb(31, 31, 31);
-        width: 100%;
-        height: 100%;
-        justify-content: center;
-        flex-direction: column;
-        text-align: center;
+    &:hover .arrow {
         display: flex;
     }
 
-    .layover {
-        display: none;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        justify-content: center;
-        flex-direction: column;
-        text-align: center;
-        font-size: 0.75rem;
+
+    .card-wrapper {
+        transition: all 300ms ease-in-out;
+
+        &:hover {
+            transform: scale(1.5);
+            z-index: 1;
+            transition-delay: 500ms;
+
+            .my_card .layover {
+                transition-delay: 500ms;
+                opacity: 1;
+            }
+        }
+
+        .my_card {
+            // width: 100%;
+            height: 100%;
+
+            .poster {
+                width: 100%;
+            }
+
+            .default_img {
+                background-color: rgb(31, 31, 31);
+                width: 100%;
+                height: 100%;
+                justify-content: center;
+                flex-direction: column;
+                text-align: center;
+                display: flex;
+                font-size: 0.75rem;
+            }
+
+            .layover {
+                display: flex;
+                opacity: 0;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                background-color: rgba(0, 0, 0, 0.5);
+                justify-content: center;
+                flex-direction: column;
+                text-align: center;
+                font-size: 0.75rem;
+            }
+
+            .star {
+                color: gold;
+            }
+
+
+        }
+
+        &.translateR:hover {
+            transform: translateX(30%) scale(1.5);
+        }
+
+        &.translateL:hover {
+            transform: translateX(-30%) scale(1.5);
+        }
     }
 
-    .star {
-        color: gold;
-    }
+}
 
-    &:hover .layover {
-        display: flex;
+@media (min-width: 576px) {
+    .card-container .my-cards>* {
+        flex-basis: calc(100% / 2);
+    }
+}
+
+@media (min-width: 768px) {
+    .card-container .my-cards>* {
+        flex-basis: calc(100% / 3);
+    }
+}
+
+@media (min-width: 992px) {
+    .card-container .my-cards>* {
+        flex-basis: calc(100% / 4);
+    }
+}
+
+@media (min-width: 1200px) {
+    .card-container .my-cards>* {
+        flex-basis: calc(100% / 5);
     }
 }
