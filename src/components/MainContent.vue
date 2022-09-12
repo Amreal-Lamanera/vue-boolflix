@@ -18,12 +18,19 @@
         <CardContainer :content="actionMovies" :tv="false" />
     </div>
 
-    <div class="series" v-if="tvs.length !== 0">
+    <div class="series" v-if="tvs.length !== 0 && (activeCat === 0 || activeCat === 2)">
 
         <h3>
             Serie {{ query === '' ? 'popolari su Boolflix' : 'trovate'}}
         </h3>
         <CardContainer :content="tvs" :tv="true" class="pb-5" />
+    </div>
+
+    <div class="films action mb-5" v-if="actionTvs.length !== 0 && (activeCat === 2 || activeCat === 3)">
+        <h3>
+            Serie di azione
+        </h3>
+        <CardContainer :content="actionTvs" :tv="true" />
     </div>
 </main>
 
@@ -54,6 +61,9 @@
             },
             actionMovies() {
                 return state.actionMovies;
+            },
+            actionTvs() {
+                return state.actionTv;
             }
         },
 

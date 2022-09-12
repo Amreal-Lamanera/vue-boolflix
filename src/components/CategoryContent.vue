@@ -21,7 +21,7 @@
         },
         data() {
             return {
-                categories: ['Home', 'Film', 'Serie TV']
+                categories: ['Home', 'Film', 'Serie TV', 'Generi']
             }
         },
     }
