@@ -98,6 +98,7 @@
                     this.getMovies();
                     this.fetchActionMovies();
                     this.fetchFantasyMovies();
+                    this.fetchCrimeMovies();
                 });
         },
 
@@ -154,7 +155,7 @@
                     if(state.genres[8] === genreId) fantasyMovies.push(element);
                 }
             });
-            if(fantasyMovies.length < 28 && state.query === '') {
+            if(fantasyMovies.length < 20 && state.query === '') {
                 const queryTypeMovie = "/movie/popular";
                 const parameters =
                 {
@@ -189,6 +190,51 @@
                     });
             }
             state.fantasyMovies = fantasyMovies;
+        },
+
+        fetchCrimeMovies() {
+            const crimeMovies = new Array();
+            state.movies.forEach(element => {
+                for (let i = 0; i < element.genres.length; i++) {
+                    const genreId = element.genres[i];
+                    if(state.genres[4] === genreId) crimeMovies.push(element);
+                }
+            });
+            if(crimeMovies.length < 20 && state.query === '') {
+                const queryTypeMovie = "/movie/popular";
+                const parameters =
+                {
+                    api_key: state.apiKey,
+                    page: 2
+                 }
+                axios
+
+                    .get(`${state.baseUri}${queryTypeMovie}`, {
+                        params: parameters
+                    })
+
+                    .then((res) => {
+                        let i = 0;
+                        const result = res.data.results;
+                        while(crimeMovies.length < 20 && i < crimeMovies.length){
+                            if(result[i].genre_ids.includes(state.genres[4])) {
+                                const newObj = 
+                                {
+                                    id: result[i].id,
+                                    title: result[i].title,
+                                    original_title: result[i].original_title,
+                                    lang: result[i].original_language,
+                                    backdrop: result[i].backdrop_path ? `https://image.tmdb.org/t/p/w780${result[i].backdrop_path}` : null,
+                                    genres: result[i].genre_ids,
+                                    vote: Math.round(result[i].vote_average/2)
+                                }
+                                if(!(state.movies.some(e => e.id === newObj.id))) crimeMovies.push(newObj)
+                            }
+                            i++;
+                        }
+                    });
+            }
+            state.crimeMovies = crimeMovies;
         },
 
         getTvs(){
@@ -230,7 +276,8 @@
                     console.log('OG TVS: ', res.data);
                     this.getTvs();
                     this.fetchActionTvs();
-                    this.fetchFantasyTvs()
+                    this.fetchFantasyTvs();
+                    this.fetchCrimeTvs();
                 });
         },
 
@@ -326,6 +373,52 @@
             state.fantasyTv = fantasyTv;
         },
 
+        fetchCrimeTvs() {
+            const crimeTv = new Array();
+            state.tv.forEach(element => {
+                for (let i = 0; i < element.genres.length; i++) {
+                    const genreId = element.genres[i];
+                    if(state.genresTv[3] === genreId) crimeTv.push(element);
+                }
+            });
+            if(crimeTv.length < 20) {
+                const queryTypeTv = "/tv/popular";
+                const parameters =
+                {
+                    api_key: state.apiKey,
+                    page: 2
+                 }
+                axios
+
+                    .get(`${state.baseUri}${queryTypeTv}`, {
+                        params: parameters
+                    })
+
+                    .then((res) => {
+                        console.log('PG 2 TV', res.data);
+                        let i = 0;
+                        const result = res.data.results;
+                        while(crimeTv.length < 20 && i < crimeTv.length){
+                            if(result[i].genre_ids.includes(state.genresTv[3])) {
+                                const newObj =
+                                {
+                                    id: result[i].id,
+                                    title: result[i].name,
+                                    original_name: result[i].original_name,
+                                    lang: result[i].original_language,
+                                    backdrop: result[i].backdrop_path ? `https://image.tmdb.org/t/p/w780${result[i].backdrop_path}` : null,
+                                    genres: result[i].genre_ids,
+                                    vote: Math.round(result[i].vote_average/2)
+                                }
+                                if(!(state.tv.some(e => e.id === newObj.id))) crimeTv.push(newObj)
+                            }
+                            i++;
+                        }
+                    });
+            }
+            state.crimeTv = crimeTv;
+        },
+
         fetchGenres(){
             axios
                 .get(`${state.baseUri}/genre/movie/list`, {
@@ -384,6 +477,8 @@
             if(!state.actionTv.length) this.fetchActionTvs();
             if(!state.fantasyMovies.length) this.fetchFantasyMovies();
             if(!state.fantasyTv.length) this.fetchFantasyTvs();
+            if(!state.crimeMovies.length) this.fetchCrimeMovies();
+            if(!state.crimeTv.length) this.fetchCrimeTvs();
             this.activeCat = index;
             state.activeCat = index;
         },

@@ -25,6 +25,13 @@
         <CardContainer :content="fantasyMovies" :tv="false" />
     </div>
 
+    <div class="films action mb-5" v-if="crimeMovies.length !== 0 && (activeCat === 1 || activeCat === 3)">
+        <h3>
+            Film Crime
+        </h3>
+        <CardContainer :content="crimeMovies" :tv="false" />
+    </div>
+
     <div class="series" v-if="tvs.length !== 0 && (activeCat === 0 || activeCat === 2)">
 
         <h3>
@@ -46,6 +53,14 @@
         </h3>
         <CardContainer :content="fantasyTvs" :tv="true" />
     </div>
+
+    <div class="films action mb-5" v-if="crimeTvs.length !== 0 && (activeCat === 2 || activeCat === 3)">
+        <h3>
+            Serie Crime
+        </h3>
+        <CardContainer :content="crimeTvs" :tv="true" />
+    </div>
+
 </main>
 
 </template>
@@ -84,7 +99,13 @@
             },
             fantasyTvs() {
                 return state.fantasyTv;
-            }
+            },
+            crimeMovies() {
+                return state.crimeMovies;
+            },
+            crimeTvs() {
+                return state.crimeTv;
+            },
         },
 
 
