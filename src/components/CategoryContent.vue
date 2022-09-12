@@ -32,11 +32,17 @@
     @import '../style/general.scss';
 
     .list-container {
+        @media (min-width:992px) {
+            font-size: 1.5rem;
+        }
 
         .list-wrapper{
             display: flex;
             gap: 0.5rem;
             align-items: center;
+            @media (min-width:992px) {
+                gap: 1rem;
+            }
 
             .element {
                 color: rgb(197, 197, 197);

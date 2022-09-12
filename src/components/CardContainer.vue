@@ -8,7 +8,7 @@
                     v-for="el,i in content"
                     :key="el.id"
                     class="card-wrapper"
-                    :class="[i === moveCount ? 'translateR' : i === moveCount + dim - 1 ? 'translateL' : '', zindex === i ? 'more_index' : '']"
+                    :class="[dim === 1 ? 'no-scale' : i === moveCount ? 'translateR' : i === moveCount + dim - 1 ? 'translateL' : '', zindex === i ? 'more_index' : '']"
                     @mouseenter="zindex = i"
                 >
                     <ContentCard :content="el" :tv="tv" />
@@ -108,7 +108,7 @@
             if(this.windowWidth < 576)   this.dim = 1;
             else if(this.windowWidth < 768)  this.dim = 2;
             else if(this.windowWidth < 992)  this.dim = 3;
-            else if(this.windowWidth < 1200) this.dim = 4;
+            else if(this.windowWidth < 1400) this.dim = 4;
             else this.dim = 5;
             this.moveCount -= 1;
             this.moveNext();

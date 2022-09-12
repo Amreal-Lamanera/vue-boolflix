@@ -124,4 +124,14 @@
 
     @import '../style/card-style.scss';
 
+    h3 {
+        font-size: 1.75rem;
+    }
+
+    @media (min-width: 992px) {
+        h3 {
+        font-size: 2rem;
+    }
+    }
+
 </style>

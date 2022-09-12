@@ -72,15 +72,10 @@ h3 {
                 background-color: rgb(31, 31, 31);
                 width: 100%;
                 height: 100%;
-                justify-content: center;
-                flex-direction: column;
                 text-align: center;
-                display: flex;
-                font-size: 0.75rem;
             }
 
             .layover {
-                display: flex;
                 opacity: 0;
                 position: absolute;
                 top: 0;
@@ -88,10 +83,15 @@ h3 {
                 right: 0;
                 left: 0;
                 background-color: rgba(0, 0, 0, 0.5);
+                text-align: center;
+            }
+
+            .default_img,
+            .layover {
+                font-size: 0.75rem;
+                display: flex;
                 justify-content: center;
                 flex-direction: column;
-                text-align: center;
-                font-size: 0.75rem;
             }
 
             .star {
@@ -107,6 +107,16 @@ h3 {
 
         &.translateL:hover {
             transform: translateX(-30%) scale(1.5);
+        }
+
+        &.no-scale:hover {
+            transform: none;
+        }
+
+
+        &.no-scale .my_card .default_img,
+        &.no-scale .my_card .layover {
+            font-size: 1.25rem;
         }
     }
 
@@ -131,6 +141,12 @@ h3 {
 }
 
 @media (min-width: 1200px) {
+    .card-container .my-cards>* {
+        flex-basis: calc(100% / 4);
+    }
+}
+
+@media (min-width: 1400px) {
     .card-container .my-cards>* {
         flex-basis: calc(100% / 5);
     }
