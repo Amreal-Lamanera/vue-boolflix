@@ -2,13 +2,13 @@
   
   <header class="d-flex justify-content-between p-3 align-items-center">
 
-    <div class="logo" @click="query='', onChange(category)">
+    <div class="logo" @click="query='', onChange(0)">
         <h1 class="text-uppercase">
             boolflix
         </h1>
     </div>
 
-    <CategoryContent @changeCat="onChange" v-if="windowWidth >= 576" />
+    <CategoryContent @changeCat="onChange" v-if="windowWidth >= 576" :active="activeCat" />
 
     <div v-if="!searching">
 
@@ -19,10 +19,10 @@
     <div v-else class="searching">
 
         <div class="glass-container">
-            <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-white glass" @click="onChange(category)" />
+            <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-white glass" @click="onChange(activeCat)" />
         </div>
 
-        <input type="text" placeholder="Cerca per titolo..." v-model="query" @keyup.enter="onChange(category)" ref="searchBar" >
+        <input type="text" placeholder="Cerca per titolo..." v-model="query" @keyup.enter="onChange(activeCat)" ref="searchBar" >
 
         <div class="layover" @click="searching = false"></div>
 
@@ -47,6 +47,7 @@
             queryTypeTv: "",
             category: '',
             windowWidth: window.innerWidth,
+            activeCat: 0
         };
     },
     methods: {
@@ -119,12 +120,12 @@
                 this.$refs.searchBar.focus();
             }, 200);
         },
-        onChange(data) {
-            if(data === 'Film'){
+        onChange(index) {
+            if(index === 1){
                 this.fetchMovies();
                 state.tv = [];
             }
-            else if(data === 'Serie TV'){
+            else if(index === 2){
                 this.fetchTv();
                 state.movies = [];
             }
@@ -132,7 +133,7 @@
                 this.fetchMovies();
                 this.fetchTv();
             }
-            this.category = data;
+            this.activeCat = index;
         },
         onResize() {
             this.windowWidth = window.innerWidth;

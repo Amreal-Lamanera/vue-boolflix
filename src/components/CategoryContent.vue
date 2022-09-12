@@ -6,7 +6,7 @@
             :key="i"
             class="element"
             :class="i===active? 'active' : ''"
-            @click="active=i, $emit('changeCat', category)"
+            @click="$emit('changeCat', i)"
         >
             {{ category }}
         </li>
@@ -16,9 +16,11 @@
 
 <script>
     export default {
+        props: {
+            active: Number
+        },
         data() {
             return {
-                active: 0,
                 categories: ['Home', 'Film', 'Serie TV']
             }
         },
