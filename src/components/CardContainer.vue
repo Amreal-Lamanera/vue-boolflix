@@ -37,7 +37,7 @@
             moveCount: 0,
             windowWidth: window.innerWidth,
             dim: null,
-            padding: 48,
+            padding: 96,
             casts: [],
         };
     },
@@ -62,6 +62,7 @@
         moveNext() {
 
             const cardDim = (this.windowWidth-this.padding)/this.dim;
+            console.log(cardDim);
             
             if(this.contentLen <= this.dim) return;
             

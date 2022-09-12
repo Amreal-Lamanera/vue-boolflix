@@ -1,6 +1,6 @@
 <template>
 
-  <main class="container-fluid overflow-hidden p-4">
+  <main class="container-fluid overflow-hidden p-5">
 
     <div class="films mb-5" v-if="movies.length !== 0">
 
@@ -23,7 +23,7 @@
         <h3>
             Serie {{ query === '' ? 'popolari su Boolflix' : 'trovate'}}
         </h3>
-        <CardContainer :content="tvs" :tv="true" />
+        <CardContainer :content="tvs" :tv="true" class="pb-5" />
     </div>
 </main>
 
