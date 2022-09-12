@@ -5,8 +5,10 @@ import Vue from 'vue';
 const state = Vue.observable({
     movies: [],
     actionMovies: [],
+    fantasyMovies: [],
     tv: [],
     actionTv: [],
+    fantasyTv: [],
     apiKey: '604eb69c5e2149adb681169e8dc9e532',
     query: '',
     baseUri: 'https://api.themoviedb.org/3',

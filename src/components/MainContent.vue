@@ -18,6 +18,13 @@
         <CardContainer :content="actionMovies" :tv="false" />
     </div>
 
+    <div class="films action mb-5" v-if="fantasyMovies.length !== 0 && (activeCat === 1 || activeCat === 3)">
+        <h3>
+            Film Fantasy
+        </h3>
+        <CardContainer :content="fantasyMovies" :tv="false" />
+    </div>
+
     <div class="series" v-if="tvs.length !== 0 && (activeCat === 0 || activeCat === 2)">
 
         <h3>
@@ -31,6 +38,13 @@
             Serie di azione
         </h3>
         <CardContainer :content="actionTvs" :tv="true" />
+    </div>
+
+    <div class="films action mb-5" v-if="fantasyTvs.length !== 0 && (activeCat === 2 || activeCat === 3)">
+        <h3>
+            Serie Fantasy
+        </h3>
+        <CardContainer :content="fantasyTvs" :tv="true" />
     </div>
 </main>
 
@@ -64,6 +78,12 @@
             },
             actionTvs() {
                 return state.actionTv;
+            },
+            fantasyMovies() {
+                return state.fantasyMovies;
+            },
+            fantasyTvs() {
+                return state.fantasyTv;
             }
         },
 

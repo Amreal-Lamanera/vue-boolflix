@@ -2,7 +2,7 @@
   
   <header class="d-flex justify-content-between p-3 align-items-center">
 
-    <div class="logo" @click="query='', onChange(0)">
+    <div class="logo" @click="query='', fetchMovies(), fetchTv()">
         <h1 class="text-uppercase">
             boolflix
         </h1>
@@ -19,10 +19,10 @@
     <div v-else class="searching">
 
         <div class="glass-container">
-            <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-white glass" @click="onChange(activeCat)" />
+            <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-white glass" @click="fetchMovies(), fetchTv()" />
         </div>
 
-        <input type="text" placeholder="Cerca per titolo..." v-model="query" @keyup.enter="onChange(activeCat)" ref="searchBar" >
+        <input type="text" placeholder="Cerca per titolo..." v-model="query" @keyup.enter="fetchMovies(), fetchTv()" ref="searchBar" >
 
         <div class="layover" @click="searching = false"></div>
 
@@ -97,6 +97,7 @@
                     console.log('OG MOVIES: ', res);
                     this.getMovies();
                     this.fetchActionMovies();
+                    this.fetchFantasyMovies();
                 });
         },
 
@@ -108,7 +109,7 @@
                     if(state.genres[0] === genreId) actionMovies.push(element);
                 }
             });
-            if(actionMovies.length < 20) {
+            if(actionMovies.length < 20 && state.query === '') {
                 const queryTypeMovie = "/movie/popular";
                 const parameters =
                 {
@@ -143,6 +144,51 @@
                     });
             }
             state.actionMovies = actionMovies;
+        },
+
+        fetchFantasyMovies() {
+            const fantasyMovies = new Array();
+            state.movies.forEach(element => {
+                for (let i = 0; i < element.genres.length; i++) {
+                    const genreId = element.genres[i];
+                    if(state.genres[8] === genreId) fantasyMovies.push(element);
+                }
+            });
+            if(fantasyMovies.length < 28 && state.query === '') {
+                const queryTypeMovie = "/movie/popular";
+                const parameters =
+                {
+                    api_key: state.apiKey,
+                    page: 2
+                 }
+                axios
+
+                    .get(`${state.baseUri}${queryTypeMovie}`, {
+                        params: parameters
+                    })
+
+                    .then((res) => {
+                        let i = 0;
+                        const result = res.data.results;
+                        while(fantasyMovies.length < 20 && i < fantasyMovies.length){
+                            if(result[i].genre_ids.includes(state.genres[8])) {
+                                const newObj = 
+                                {
+                                    id: result[i].id,
+                                    title: result[i].title,
+                                    original_title: result[i].original_title,
+                                    lang: result[i].original_language,
+                                    backdrop: result[i].backdrop_path ? `https://image.tmdb.org/t/p/w780${result[i].backdrop_path}` : null,
+                                    genres: result[i].genre_ids,
+                                    vote: Math.round(result[i].vote_average/2)
+                                }
+                                if(!(state.movies.some(e => e.id === newObj.id))) fantasyMovies.push(newObj)
+                            }
+                            i++;
+                        }
+                    });
+            }
+            state.fantasyMovies = fantasyMovies;
         },
 
         getTvs(){
@@ -184,6 +230,7 @@
                     console.log('OG TVS: ', res.data);
                     this.getTvs();
                     this.fetchActionTvs();
+                    this.fetchFantasyTvs()
                 });
         },
 
@@ -230,8 +277,53 @@
                         }
                     });
             }
-            console.log('ACTION TVS: ', actionTv);
             state.actionTv = actionTv;
+        },
+
+        fetchFantasyTvs() {
+            const fantasyTv = new Array();
+            state.tv.forEach(element => {
+                for (let i = 0; i < element.genres.length; i++) {
+                    const genreId = element.genres[i];
+                    if(state.genresTv[11] === genreId) fantasyTv.push(element);
+                }
+            });
+            if(fantasyTv.length < 20) {
+                const queryTypeTv = "/tv/popular";
+                const parameters =
+                {
+                    api_key: state.apiKey,
+                    page: 2
+                 }
+                axios
+
+                    .get(`${state.baseUri}${queryTypeTv}`, {
+                        params: parameters
+                    })
+
+                    .then((res) => {
+                        console.log('PG 2 TV', res.data);
+                        let i = 0;
+                        const result = res.data.results;
+                        while(fantasyTv.length < 20 && i < fantasyTv.length){
+                            if(result[i].genre_ids.includes(state.genresTv[11])) {
+                                const newObj =
+                                {
+                                    id: result[i].id,
+                                    title: result[i].name,
+                                    original_name: result[i].original_name,
+                                    lang: result[i].original_language,
+                                    backdrop: result[i].backdrop_path ? `https://image.tmdb.org/t/p/w780${result[i].backdrop_path}` : null,
+                                    genres: result[i].genre_ids,
+                                    vote: Math.round(result[i].vote_average/2)
+                                }
+                                if(!(state.tv.some(e => e.id === newObj.id))) fantasyTv.push(newObj)
+                            }
+                            i++;
+                        }
+                    });
+            }
+            state.fantasyTv = fantasyTv;
         },
 
         fetchGenres(){
@@ -276,18 +368,22 @@
         },
 
         onChange(index) {
-            if(index === 1){
-                this.fetchMovies();
-                state.tv = [];
-            }
-            else if(index === 2){
-                this.fetchTv();
-                state.movies = [];
-            }
-            else {
-                this.fetchMovies();
-                this.fetchTv();
-            }
+            // if(index === 1){
+            //     this.fetchMovies();
+            //     state.tv = [];
+            // }
+            // else if(index === 2){
+            //     this.fetchTv();
+            //     state.movies = [];
+            // }
+            // else {
+            //     this.fetchMovies();
+            //     this.fetchTv();
+            // }
+            if(!state.actionMovies.length) this.fetchActionMovies();
+            if(!state.actionTv.length) this.fetchActionTvs();
+            if(!state.fantasyMovies.length) this.fetchFantasyMovies();
+            if(!state.fantasyTv.length) this.fetchFantasyTvs();
             this.activeCat = index;
             state.activeCat = index;
         },
