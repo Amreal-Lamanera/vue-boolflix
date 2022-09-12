@@ -8,9 +8,10 @@
                     v-for="el,i in content"
                     :key="el.id"
                     class="card-wrapper"
-                    :class="i === moveCount ? 'translateR' : i === moveCount + dim - 1 ? 'translateL' : ''"
+                    :class="[i === moveCount ? 'translateR' : i === moveCount + dim - 1 ? 'translateL' : '', zindex === i ? 'more_index' : '']"
+                    @mouseenter="zindex = i"
                 >
-                    <ContentCard :content="el" :actors="casts[i]"/>
+                    <ContentCard :content="el" :actors="casts[i]" />
                 </div>
                 <div class="arrow next" @click="moveNext" ref="arrow_next">
                     <font-awesome-icon icon="fa-solid fa-arrow-right" />
@@ -39,6 +40,7 @@
             dim: null,
             padding: 96,
             casts: [],
+            zindex: -1
         };
     },
 

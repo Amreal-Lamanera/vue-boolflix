@@ -1,5 +1,8 @@
 <template>
     <div class="my_card position-relative">
+        <h3 class="content-title">
+            {{ content.title }}
+        </h3>
 
         <div v-if="content.backdrop">
             <img :src="content.backdrop" alt="" class="poster">
@@ -71,5 +74,21 @@
   <style scoped lang="scss">
   
     @import '../style/card-style.scss';
+
+    .card-wrapper:hover .content-title {
+        opacity: 0;
+        transition-delay: 500ms;
+    }
+
+    .content-title {
+        font-size: 0.75rem;
+        text-align: center;
+        padding-bottom: 0;
+        color: #FFF;
+        position: absolute;
+        top: calc(100% + 00.5rem);
+        left: 50%;
+        transform: translateX(-50%);
+    }
   
   </style>
