@@ -1,41 +1,43 @@
 <template>
   
-  <header class="d-flex justify-content-between align-items-center">
+  <header class="d-flex align-items-center" :class="searching ? 'justify-content-center' : 'justify-content-between'">
 
-    <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center" v-if="!searching">
         <div class="logo" @click="query='', fetchMovies(), fetchTv(), onChange(0)">
-            <img src="../assets/lamaflix.png" alt="">
+            <img src="../assets/lamaflix-v2.png" alt="">
         </div>
     
         <CategoryContent @changeCat="onChange" v-if="windowWidth >= 576" :active="activeCat" class="ms-4" />
     </div>
 
-    <div v-if="!searching">
-
-        <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-white glass" @click="clickHandler" />
-
-    </div>
-
-    <div v-else class="searching">
-
-        <div class="glass-container">
-            <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-white glass" @click="fetchMovies(), fetchTv()" />
+    <div class="d-flex align-items-center">
+        <div v-if="searching" class="searching">
+            
+            <div class="glass-container">
+                <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-white glass" @click="fetchMovies(), fetchTv()" />
+            </div>
+            
+            <input type="text" placeholder="Cerca per titolo..." v-model="query" @keyup.enter="fetchMovies(), fetchTv()" ref="searchBar" >
+            
+            <div class="layover" @click="searching = false"></div>
+            
         </div>
-
-        <input type="text" placeholder="Cerca per titolo..." v-model="query" @keyup.enter="fetchMovies(), fetchTv()" ref="searchBar" >
-
-        <div class="layover" @click="searching = false"></div>
-
-    </div>
-
-    <div v-if="windowWidth < 576">
-        <div class="burger" @click="hiddenMenu = true">
-            =
+    
+        <div v-else>
+    
+            <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-white glass" @click="clickHandler" />
+    
         </div>
-        <div class="hidden-menu" :class="hiddenMenu ? 'visible' : ''">
-            <CategoryContent @changeCat="onChange" :active="activeCat" v-if="hiddenMenu" />
+    
+        <div v-if="windowWidth < 576 && !searching" class="ms-3">
+            <div class="burger" @click="hiddenMenu = true">
+                =
+            </div>
+            <div class="hidden-menu" :class="hiddenMenu ? 'visible' : ''">
+                <CategoryContent @changeCat="onChange" :active="activeCat" v-if="hiddenMenu" />
+            </div>
+            <div class="layover-menu" :class="hiddenMenu ? 'visible' : ''" @click="hiddenMenu = false"></div>
         </div>
-        <div class="layover-menu" :class="hiddenMenu ? 'visible' : ''" @click="hiddenMenu = false"></div>
     </div>
 
   </header>

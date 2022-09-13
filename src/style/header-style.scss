@@ -1,17 +1,13 @@
 header {
-    padding: 0.5rem 1rem;
+    padding: 1.25rem 1rem;
 
     @media (min-width:992px) {
-        padding: 1rem 3rem;
+        padding: 1.25rem 3rem;
     }
 
     .logo {
         cursor: pointer;
-        width: 60%;
-
-        @media (min-width:576px) {
-            width: 30%;
-        }
+        width: 125px;
 
         img {
             max-width: 100%;
@@ -51,6 +47,8 @@ header {
         cursor: pointer;
     }
 
+    background-color: $--dark;
+
     .searching {
         display: flex;
         align-content: center;
@@ -67,7 +65,6 @@ header {
 
         .layover {
             position: absolute;
-            // for testing
             background-color: rgba(0, 0, 0, 0.5);
             top: 0;
             bottom: 0;
@@ -79,7 +76,7 @@ header {
         .glass-container {
             border-top-left-radius: 1rem;
             border-bottom-left-radius: 1rem;
-            border-right: none;
+            border-right-width: 0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -98,7 +95,7 @@ header {
         input {
             border-top-right-radius: 1rem;
             border-bottom-right-radius: 1rem;
-            border-left: none;
+            border-left-width: 0;
             color: #FFF;
             font-size: 75%;
 
