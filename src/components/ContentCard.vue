@@ -117,7 +117,7 @@
         padding-bottom: 0;
         color: #FFF;
         position: absolute;
-        top: calc(100% + 00.5rem);
+        top: calc(100% + 0.5rem);
         left: 50%;
         transform: translateX(-50%);
     }
