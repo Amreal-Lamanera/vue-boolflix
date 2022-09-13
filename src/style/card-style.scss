@@ -132,16 +132,27 @@ h3 {
                 text-align: center;
             }
 
+            .star {
+                color: gold;
+            }
+
             .default_img,
             .layover {
                 font-size: 0.75rem;
                 display: flex;
-                justify-content: center;
+                justify-content: end;
                 flex-direction: column;
-            }
 
-            .star {
-                color: gold;
+                @media (min-width: 1921px) {
+                    font-size: 1rem;
+                }
+
+                &>* {
+                    height: calc(100% - 1.5rem);
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+                }
             }
 
             .like {
@@ -149,8 +160,12 @@ h3 {
                 position: absolute;
                 top: 0;
                 right: 0;
-                padding: 1rem;
+                padding: 0.5rem;
                 font-size: 1rem;
+
+                @media (min-width: 1921px) {
+                    font-size: 2rem;
+                }
 
                 &.red {
                     color: red;
@@ -175,7 +190,7 @@ h3 {
 
         &.no-scale .my_card .default_img,
         &.no-scale .my_card .layover {
-            font-size: 1.25rem;
+            font-size: 0.75rem;
         }
     }
 
@@ -206,7 +221,7 @@ h3 {
     }
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1921px) {
     .card-container .my-cards>* {
         flex-basis: calc(100% / 5);
     }

@@ -18,42 +18,46 @@
 
         <div :class="content.backdrop || content.poster ? 'layover' : 'default_img'">
             <div>
-                <strong>Titolo: </strong>{{ content.title }}
-            </div>
 
-            <div>
-                <strong>Titolo originale: </strong>{{ content.original_title }}
-            </div>
-
-            <div>
-
-                <strong>Lingua originale: </strong>
-    
-                <GetFlags :array="content" class="d-inline" />
-
-            </div>
-            
-            <div>
-                <strong>Valutazione: </strong>
-                <font-awesome-icon class="star" icon="fa-solid fa-star" v-for="n,i in content.vote" :key="i" />
-                <font-awesome-icon class="star" icon="fa-regular fa-star" v-for="n,i in 5 - content.vote" :key="5-i" />
-            </div>
-
-            <template v-if="tv !== null">
-                <div v-if="!castDone">
-                    <span>Clicca per mostrare gli attori principali...</span>
+                <div>
+                    <strong>Titolo: </strong>{{ content.title }}
                 </div>
-    
-                <div v-else>
-                    <strong>Attori: </strong>
-                    <span v-for="actor,i in cast" :key="i">
-                        {{ actor }}{{ i === cast.length-1 ? '' : ', ' }}
-                    </span>
-                </div>
-            </template>
 
-            <div class="like" :class="favourite.includes(content) ? 'red' : ''">
-                <font-awesome-icon icon="fa-solid fa-heart-circle-plus" @click="addFavourite(content)" />
+                <div>
+                    <strong>Titolo originale: </strong>{{ content.original_title }}
+                </div>
+
+                <div>
+
+                    <strong>Lingua originale: </strong>
+        
+                    <GetFlags :array="content" class="d-inline" />
+
+                </div>
+                
+                <div>
+                    <strong>Valutazione: </strong>
+                    <font-awesome-icon class="star" icon="fa-solid fa-star" v-for="n,i in content.vote" :key="i" />
+                    <font-awesome-icon class="star" icon="fa-regular fa-star" v-for="n,i in 5 - content.vote" :key="5-i" />
+                </div>
+
+                <template v-if="tv !== null">
+                    <div v-if="!castDone">
+                        <span>Clicca per mostrare gli attori principali...</span>
+                    </div>
+        
+                    <div v-else>
+                        <strong>Attori: </strong>
+                        <span v-for="actor,i in cast" :key="i">
+                            {{ actor }}{{ i === cast.length-1 ? '' : ', ' }}
+                        </span>
+                    </div>
+                </template>
+
+                <div class="like" :class="favourite.includes(content) ? 'red' : ''">
+                    <font-awesome-icon icon="fa-solid fa-heart-circle-plus" @click="addFavourite(content)" />
+                </div>
+
             </div>
         </div>
     </div>

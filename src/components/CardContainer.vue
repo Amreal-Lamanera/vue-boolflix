@@ -118,7 +118,7 @@
         windowWidth: function() {
              if(this.windowWidth < 768)  this.dim = 2;
             else if(this.windowWidth < 992)  this.dim = 3;
-            else if(this.windowWidth < 1400) this.dim = 4;
+            else if(this.windowWidth < 1921) this.dim = 4;
             else this.dim = 5;
             this.moveCount -= 1;
             this.moveNext();
