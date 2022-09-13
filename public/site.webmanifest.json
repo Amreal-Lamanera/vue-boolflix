@@ -1,0 +1,13 @@
+{
+    "shortname": "Lamaflix",
+    "name": "Lamaflix",
+    "icons": [
+        {
+            "src": "./lamaflix.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        }
+    ],
+    "theme_color": "#141414",
+    "display": "fullscreen"
+}
