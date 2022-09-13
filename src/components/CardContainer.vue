@@ -57,6 +57,10 @@
     methods: {
         onResize() {
             this.windowWidth = window.innerWidth;
+            if(this.windowWidth < 576) {
+                this.moveCount = -1;
+                this.moveNext();
+            }
             if(this.windowWidth < 768) this.dim = 2;
             else if(this.windowWidth < 992) this.dim = 3;
             else if(this.windowWidth < 1200) this.dim = 4;
@@ -112,8 +116,6 @@
             this.resetMove();
         },
         windowWidth: function() {
-            // if(this.windowWidth < 576)   this.dim = 1;
-            // else
              if(this.windowWidth < 768)  this.dim = 2;
             else if(this.windowWidth < 992)  this.dim = 3;
             else if(this.windowWidth < 1400) this.dim = 4;
