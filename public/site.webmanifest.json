@@ -3,9 +3,9 @@
     "name": "Lamaflix",
     "icons": [
         {
-            "src": "./lamaflix-l.png",
+            "src": "./l.png",
             "type": "image/png",
-            "sizes": "90x120"
+            "sizes": "144x144"
         }
     ],
     "theme_color": "#141414",
