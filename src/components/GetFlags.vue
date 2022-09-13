@@ -23,7 +23,7 @@ export default {
                     src += "es";
                     break;
                 case "en":
-                    src += "gb-eng";
+                    src += "gb";
                     break;
                 case "ko":
                     src += "kr";
