@@ -16,7 +16,8 @@ const state = Vue.observable({
     baseUri: 'https://api.themoviedb.org/3',
     genres: [],
     genresTv: [],
-    activeCat: 0
+    activeCat: 0,
+    favouriteContent: []
 });
 
 // esportiamo state per poterla importare negli altri componenti

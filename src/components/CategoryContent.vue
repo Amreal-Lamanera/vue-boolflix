@@ -10,6 +10,7 @@
         >
             {{ category }}
         </li>
+
     </ul>
   </div>
 </template>
@@ -21,7 +22,7 @@
         },
         data() {
             return {
-                categories: ['Home', 'Film', 'Serie TV', 'Generi']
+                categories: ['Home', 'Film', 'Serie TV', 'Generi', 'Preferiti']
             }
         },
     }

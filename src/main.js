@@ -36,6 +36,7 @@ import { faStar as faStarSol } from '@fortawesome/free-solid-svg-icons'
 import { faStar as faStarReg } from '@fortawesome/free-regular-svg-icons'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faHeartCirclePlus } from '@fortawesome/free-solid-svg-icons'
 
 
 /* add icons to the library */
@@ -44,6 +45,7 @@ library.add(faStarSol)
 library.add(faStarReg)
 library.add(faArrowLeft)
 library.add(faArrowRight)
+library.add(faHeartCirclePlus)
 
 
 /* add font awesome icon component */

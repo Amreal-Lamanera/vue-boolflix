@@ -129,6 +129,19 @@ h3 {
                 color: gold;
             }
 
+            .like {
+                color: #FFF;
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 1rem;
+                font-size: 1rem;
+
+                &.red {
+                    color: red;
+                }
+            }
+
 
         }
 

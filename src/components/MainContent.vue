@@ -40,25 +40,32 @@
         <CardContainer :content="tvs" :tv="true" class="pb-5" />
     </div>
 
-    <div class="films action" v-if="actionTvs.length !== 0 && (activeCat === 2 || activeCat === 3)">
+    <div class="series action" v-if="actionTvs.length !== 0 && (activeCat === 2 || activeCat === 3)">
         <h3>
             Serie di azione
         </h3>
         <CardContainer :content="actionTvs" :tv="true" />
     </div>
 
-    <div class="films action" v-if="fantasyTvs.length !== 0 && (activeCat === 2 || activeCat === 3)">
+    <div class="series fantasy" v-if="fantasyTvs.length !== 0 && (activeCat === 2 || activeCat === 3)">
         <h3>
             Serie Fantasy
         </h3>
         <CardContainer :content="fantasyTvs" :tv="true" />
     </div>
 
-    <div class="films action" v-if="crimeTvs.length !== 0 && (activeCat === 2 || activeCat === 3)">
+    <div class="series crime" v-if="crimeTvs.length !== 0 && (activeCat === 2 || activeCat === 3)">
         <h3>
             Serie Crime
         </h3>
         <CardContainer :content="crimeTvs" :tv="true" />
+    </div>
+
+    <div class="favourite" v-if="favourite.length !== 0 && activeCat === 4">
+        <h3>
+            I miei preferiti
+        </h3>
+        <CardContainer :content="favourite" :tv="null" />
     </div>
 
 </main>
@@ -106,6 +113,9 @@
             crimeTvs() {
                 return state.crimeTv;
             },
+            favourite() {
+                return state.favouriteContent;
+            }
         },
 
 

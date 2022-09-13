@@ -31,15 +31,21 @@
                 <font-awesome-icon class="star" icon="fa-regular fa-star" v-for="n,i in 5 - content.vote" :key="5-i" />
             </div>
 
-            <div v-if="!castDone">
-                <span>Clicca per mostrare gli attori principali...</span>
-            </div>
+            <template v-if="tv !== null">
+                <div v-if="!castDone">
+                    <span>Clicca per mostrare gli attori principali...</span>
+                </div>
+    
+                <div v-else>
+                    <strong>Attori: </strong>
+                    <span v-for="actor,i in cast" :key="i">
+                        {{ actor }}{{ i === cast.length-1 ? '' : ', ' }}
+                    </span>
+                </div>
+            </template>
 
-            <div v-else>
-                <strong>Attori: </strong>
-                <span v-for="actor,i in cast" :key="i">
-                    {{ actor }}{{ i === cast.length-1 ? '' : ', ' }}
-                </span>
+            <div class="like" :class="favourite.includes(content) ? 'red' : ''">
+                <font-awesome-icon icon="fa-solid fa-heart-circle-plus" @click="addFavourite(content)" />
             </div>
         </div>
     </div>
@@ -59,15 +65,22 @@
         tv: Boolean
     },
 
+    computed: {
+        favourite() {
+            return state.favouriteContent;
+        }
+    },
+
     data() {
         return {
             cast: [],
-            castDone: false
+            castDone: false,
         }
     },
     
     methods: {
         getActors() {
+            if(this.tv === null) return;
             if(!this.castDone){
                 const cast = [];
                 if(this.content.length === 0) return;
@@ -93,6 +106,15 @@
                     this.cast = cast;
                     this.castDone = true
                 })
+            }
+        },
+        addFavourite(content) {
+            if(!this.favourite.includes(content)) {
+                state.favouriteContent.push(content);
+            }
+            else {
+                const index = state.favouriteContent.indexOf(content);
+                state.favouriteContent.splice(index,1);
             }
         }
     },
