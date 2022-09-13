@@ -142,6 +142,11 @@
         top: calc(100% + 0.5rem);
         left: 50%;
         transform: translateX(-50%);
+        display: none;
+
+        @media (min-width: 576px) {
+            display: block;
+        }
     }
   
   </style>

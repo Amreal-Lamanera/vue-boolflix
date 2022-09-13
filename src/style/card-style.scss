@@ -8,19 +8,27 @@ h3 {
     padding-bottom: 3rem;
 
     .my-cards {
-        // overflow-y: hidden;
         display: flex;
         transition: all 300ms ease-in-out;
+        padding-bottom: 5px;
 
-        // &::-webkit-scrollbar {
-        //     padding-top: 5px;
-        //     height: 5px;
-        // }
+        &::-webkit-scrollbar {
+            height: 0.5rem;
+        }
 
-        // &::-webkit-scrollbar-thumb {
-        //     box-shadow: inset 1rem 1rem rgba(74, 74, 74, 0.5);
-        //     border-radius: 1rem;
-        // }
+        &::-webkit-scrollbar-thumb {
+            box-shadow: inset 1rem 1rem rgba(74, 74, 74, 0.5);
+            border-radius: 1rem;
+        }
+
+        overflow-y: hidden;
+        overflow-x: scroll;
+
+        @media (min-width: 576px) {
+            overflow: inherit;
+        }
+
+
 
         .arrow {
             position: absolute;
@@ -33,6 +41,7 @@ h3 {
             align-items: center;
             justify-content: center;
             bottom: 0;
+
 
             @media (min-width:992px) {
                 width: 3rem;
@@ -68,7 +77,9 @@ h3 {
     }
 
     &:hover .arrow {
-        display: flex;
+        @media (min-width:576px) {
+            display: flex;
+        }
     }
 
 
