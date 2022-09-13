@@ -105,8 +105,9 @@
             this.resetMove();
         },
         windowWidth: function() {
-            if(this.windowWidth < 576)   this.dim = 1;
-            else if(this.windowWidth < 768)  this.dim = 2;
+            // if(this.windowWidth < 576)   this.dim = 1;
+            // else
+             if(this.windowWidth < 768)  this.dim = 2;
             else if(this.windowWidth < 992)  this.dim = 3;
             else if(this.windowWidth < 1400) this.dim = 4;
             else this.dim = 5;

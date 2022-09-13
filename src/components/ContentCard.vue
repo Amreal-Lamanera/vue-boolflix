@@ -4,11 +4,19 @@
             {{ content.title }}
         </h3>
 
-        <div v-if="content.backdrop">
-            <img :src="content.backdrop" alt="" class="poster">
-        </div>
+        <template v-if="windowWidth < 576">
+            <div v-if="content.poster">
+                <img :src="content.poster" alt="" class="poster">
+            </div>
+        </template>
 
-        <div :class="content.backdrop? 'layover' : 'default_img'">
+        <template v-else>
+            <div v-if="content.backdrop">
+                <img :src="content.backdrop" alt="" class="poster">
+            </div>
+        </template>
+
+        <div :class="content.backdrop || content.poster ? 'layover' : 'default_img'">
             <div>
                 <strong>Titolo: </strong>{{ content.title }}
             </div>
@@ -64,15 +72,16 @@
         // actors: Array
         tv: Boolean
     },
-
+    
     computed: {
         favourite() {
             return state.favouriteContent;
         }
     },
-
+    
     data() {
         return {
+            windowWidth: window.innerWidth,
             cast: [],
             castDone: false,
         }
@@ -116,11 +125,20 @@
                 const index = state.favouriteContent.indexOf(content);
                 state.favouriteContent.splice(index,1);
             }
-        }
+        },
+
+        onResize() {
+            this.windowWidth = window.innerWidth;
+        },
     },
     components: {
         GetFlags
-    }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            window.addEventListener('resize', this.onResize);
+        })
+    },
 }
   </script>
   

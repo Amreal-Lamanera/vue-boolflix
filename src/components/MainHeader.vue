@@ -73,6 +73,7 @@
                     original_title: el.original_title,
                     lang: el.original_language,
                     backdrop: el.backdrop_path ? `https://image.tmdb.org/t/p/w780${el.backdrop_path}` : null,
+                    poster: el.poster_path ? `https://image.tmdb.org/t/p/w342${el.poster_path}` : null,
                     genres: el.genre_ids,
                     vote: Math.round(el.vote_average/2)
                 };
@@ -146,6 +147,7 @@
                                     original_title: result[i].original_title,
                                     lang: result[i].original_language,
                                     backdrop: result[i].backdrop_path ? `https://image.tmdb.org/t/p/w780${result[i].backdrop_path}` : null,
+                                    poster: result[i].poster_path ? `https://image.tmdb.org/t/p/w342${result[i].poster_path}` : null,
                                     genres: result[i].genre_ids,
                                     vote: Math.round(result[i].vote_average/2)
                                 }
@@ -191,6 +193,7 @@
                                     original_title: result[i].original_title,
                                     lang: result[i].original_language,
                                     backdrop: result[i].backdrop_path ? `https://image.tmdb.org/t/p/w780${result[i].backdrop_path}` : null,
+                                    poster: result[i].poster_path ? `https://image.tmdb.org/t/p/w342${result[i].poster_path}` : null,
                                     genres: result[i].genre_ids,
                                     vote: Math.round(result[i].vote_average/2)
                                 }
@@ -236,6 +239,7 @@
                                     original_title: result[i].original_title,
                                     lang: result[i].original_language,
                                     backdrop: result[i].backdrop_path ? `https://image.tmdb.org/t/p/w780${result[i].backdrop_path}` : null,
+                                    poster: result[i].poster_path ? `https://image.tmdb.org/t/p/w342${result[i].poster_path}` : null,
                                     genres: result[i].genre_ids,
                                     vote: Math.round(result[i].vote_average/2)
                                 }
@@ -256,6 +260,7 @@
                     original_title: el.original_name,
                     lang: el.original_language,
                     backdrop: el.backdrop_path ? `https://image.tmdb.org/t/p/w780${el.backdrop_path}` : null,
+                    poster: el.poster_path ? `https://image.tmdb.org/t/p/w342${el.poster_path}` : null,
                     genres: el.genre_ids,
                     vote: Math.round(el.vote_average/2)
                 };
@@ -326,6 +331,7 @@
                                     original_name: result[i].original_name,
                                     lang: result[i].original_language,
                                     backdrop: result[i].backdrop_path ? `https://image.tmdb.org/t/p/w780${result[i].backdrop_path}` : null,
+                                    poster: result.poster_path ? `https://image.tmdb.org/t/p/w342${result.poster_path}` : null,
                                     genres: result[i].genre_ids,
                                     vote: Math.round(result[i].vote_average/2)
                                 }
@@ -372,6 +378,7 @@
                                     original_name: result[i].original_name,
                                     lang: result[i].original_language,
                                     backdrop: result[i].backdrop_path ? `https://image.tmdb.org/t/p/w780${result[i].backdrop_path}` : null,
+                                    poster: result.poster_path ? `https://image.tmdb.org/t/p/w342${result.poster_path}` : null,
                                     genres: result[i].genre_ids,
                                     vote: Math.round(result[i].vote_average/2)
                                 }
@@ -418,6 +425,7 @@
                                     original_name: result[i].original_name,
                                     lang: result[i].original_language,
                                     backdrop: result[i].backdrop_path ? `https://image.tmdb.org/t/p/w780${result[i].backdrop_path}` : null,
+                                    poster: result.poster_path ? `https://image.tmdb.org/t/p/w342${result.poster_path}` : null,
                                     genres: result[i].genre_ids,
                                     vote: Math.round(result[i].vote_average/2)
                                 }
