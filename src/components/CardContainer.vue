@@ -57,6 +57,13 @@
     methods: {
         onResize() {
             this.windowWidth = window.innerWidth;
+            if(this.windowWidth < 768) this.dim = 2;
+            else if(this.windowWidth < 992) this.dim = 3;
+            else if(this.windowWidth < 1200) this.dim = 4;
+            else this.dim = 5;
+
+            if(this.windowWidth < 992) this.padding = 32;
+            else this.padding = 96;
         },
 
         moveNext() {
@@ -132,13 +139,13 @@
             // if(this.windowWidth < 576)
             //     this.dim = 1;
             // else
-            if(this.windowWidth < 768) this.dim = 2;
-            else if(this.windowWidth < 992) this.dim = 3;
-            else if(this.windowWidth < 1200) this.dim = 4;
-            else this.dim = 5;
+            // if(this.windowWidth < 768) this.dim = 2;
+            // else if(this.windowWidth < 992) this.dim = 3;
+            // else if(this.windowWidth < 1200) this.dim = 4;
+            // else this.dim = 5;
 
-            if(this.windowWidth < 992) this.padding = 32;
-            else this.padding = 96;
+            // if(this.windowWidth < 992) this.padding = 32;
+            // else this.padding = 96;
         })
     },
 }
