@@ -3,17 +3,7 @@
   <header class="d-flex justify-content-between align-items-center">
 
     <div class="d-flex align-items-center">
-        <div class="logo" @click="query='', fetchMovies(), fetchTv()">
-            <!-- <h1 class="text-uppercase m-0 d-flex align-items-start">
-                <span class="fs_max">b</span>
-                <span class="fs_hi">o</span>
-                <span class="fs_mid">o</span>
-                <span class="fs_min">l</span>
-                <span class="fs_min">f</span>
-                <span class="fs_mid">l</span>
-                <span class="fs_hi">i</span>
-                <span class="fs_max">x</span>
-            </h1> -->
+        <div class="logo" @click="query='', fetchMovies(), fetchTv(), onChange(0)">
             <img src="../assets/lamaflix.png" alt="">
         </div>
     
